@@ -52,3 +52,9 @@ Welcome to the Django project! This guide will take you from zero to hero, helpi
    For **macOS**:
    ```bash
    python3 manage.py runserver
+
+
+
+
+
+**Stay with us more project comming soon
