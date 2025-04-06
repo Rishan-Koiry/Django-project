@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Website RK - Contact</title>
+    <style>
+      .toggle-theme.light-theme {
+        background: #f4f4f4;
+        color: #333;
+      }
+      .toggle-theme.light-theme .container {
+        background-color: #fff;
+        color: #333;
+      }
+      .toggle-theme {
+        width: 200px;
+      }
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: #121212;
+        color: #fff;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+      }
+      .toggle-theme {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #4caf50;
+        color: white;
+        padding: 10px 15px;
+        border-radius: 8px;
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+      .toggle-theme:hover {
+        background: #43a047;
+      }
+      .container {
+        background-color: #333;
+        padding: 40px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+        opacity: 0;
+        transform: translateY(30px);
+        animation: fadeInUp 0.8s forwards ease-out;
+        max-width: 450px;
+        width: 100%;
+        text-align: center;
+      }
+      h2 {
+        margin-top: 0;
+        font-size: 32px;
+        color: #fff;
+        margin-bottom: 20px;
+      }
+      label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #bbb;
+      }
+      .error-message {
+        color: red;
+        font-size: 14px;
+        margin-top: -8px;
+        margin-bottom: 8px;
+        display: none;
+      }
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 14px;
+        border: 2px solid #555;
+        border-radius: 8px;
+        background-color: #222;
+        color: #fff;
+        transition: border-color 0.4s ease;
+      }
+      input:focus,
+      textarea:focus {
+        border-color: #458f97;
+        outline: none;
+      }
+      button {
+        background-color: #4caf9de4;
+        color: white;
+        padding: 14px;
+        margin-top: 12px;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        width: 100%;
+        font-size: 18px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+      button:hover {
+        background-color: #43a047;
+        transform: translateY(-2px);
+      }
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+    </style>
+    <script>
+      function toggleTheme() {
+        const body = document.body;
+        body.classList.toggle("light-theme");
+        if (body.classList.contains("light-theme")) {
+          body.style.background = "#f4f4f4";
+          body.style.color = "#333";
+        } else {
+          body.style.background = "#121212";
+          body.style.color = "#fff";
+        }
+        body.classList.add("theme-transition");
+        window.setTimeout(() => {
+          body.classList.remove("theme-transition");
+        }, 5000);
+      }
+    </script>
+    <style>
+      .theme-transition {
+        transition: background-color 1s ease, color 1s ease;
+      }
+    </style>
+  </head>
+  <body>
+    <button class="toggle-theme" onclick="toggleTheme()">Toggle Theme</button>
+    <div class="container">
+      <h2>Contact Us</h2>
+      <form method="POST">
+        {% csrf_token %}
+        <label for="name">Name:</label>
+        <input
+          type="text"
+          id="name"
+          name="name"
+          placeholder="Your Name"
+          required
+        />
+        <div id="nameError" class="error-message">
+          * Please enter the right name
+        </div>
+        <label for="email">Email:</label>
+        <input
+          type="email"
+          id="email"
+          name="email"
+          placeholder="Your Email"
+          required
+        />
+        <label for="message">Message:</label>
+        <textarea
+          id="message"
+          name="message"
+          rows="6"
+          placeholder="Your Message"
+          required
+        ></textarea>
+        <button type="submit">Send Message</button>
+      </form>
+    </div>
+  </body>
+</html>

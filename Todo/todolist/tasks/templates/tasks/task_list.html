@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>To-Do List</title>
+    <style>
+      /* General Styles */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        min-height: 100vh;
+        background: linear-gradient(135deg, #e0f7fa, #80deea);
+        overflow: hidden;
+      }
+
+      /* Loading Animation */
+      .loading {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(255, 255, 255, 0.8);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+      }
+
+      .loader {
+        border: 8px solid #f3f3f3;
+        border-top: 8px solid #00796b;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Sidebar Styles */
+      .sidebar {
+        width: 250px;
+        background: #00796b;
+        color: white;
+        padding: 20px;
+        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        overflow-y: auto;
+      }
+
+      .sidebar h2 {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .sidebar ul {
+        list-style: none;
+        padding: 0;
+      }
+
+      .sidebar ul li {
+        margin: 15px 0;
+      }
+
+      .sidebar ul li a {
+        color: white;
+        text-decoration: none;
+        font-size: 16px;
+        transition: color 0.3s ease;
+      }
+
+      .sidebar ul li a:hover {
+        color: #b2ebf2;
+      }
+
+      /* Main Content Styles */
+      .container {
+        flex-grow: 1;
+        padding: 20px;
+        max-width: 600px;
+        margin: 0 auto;
+        overflow-y: auto;
+      }
+
+      h1 {
+        text-align: center;
+        color: #00796b;
+      }
+
+      /* Task List Styles */
+      .task-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .task-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        margin: 10px 0;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transition: all 0.3s ease;
+      }
+
+      .task-item.completed {
+        background: #e0f7fa;
+      }
+
+      .task-item.completed .task-title {
+        text-decoration: line-through;
+        color: #888;
+      }
+
+      .task-form {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .task-title {
+        flex-grow: 1;
+        font-size: 16px;
+        color: #333;
+      }
+
+      .delete-btn {
+        color: #ff4444;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+      }
+
+      .delete-btn:hover {
+        color: #cc0000;
+      }
+
+      .add-task-btn {
+        display: block;
+        width: 50%;
+        padding: 10px;
+        background-color: #00796b;
+        color: white;
+        text-align: center;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-top: 20px;
+        transition: background-color 0.3s ease;
+      }
+
+      .add-task-btn:hover {
+        background-color: #004d40;
+      }
+
+      /* Animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-10px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes slideOut {
+        from {
+          opacity: 1;
+          transform: translateX(0);
+        }
+        to {
+          opacity: 0;
+          transform: translateX(100%);
+        }
+      }
+
+      .task-item {
+        animation: fadeIn 0.5s ease;
+      }
+
+      .task-item.deleting {
+        animation: slideOut 0.5s ease forwards;
+      }
+
+      /* Notification Styles */
+      .notification {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: #00796b;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease;
+        z-index: 1000;
+      }
+
+      /* Responsive Styles */
+      @media (max-width: 768px) {
+        body {
+          flex-direction: column;
+        }
+
+        .sidebar {
+          width: 100%;
+          height: auto;
+          padding: 10px;
+        }
+
+        .container {
+          padding: 10px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Loading Animation -->
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Settings</a></li>
+        <li><a href="#">Profile</a></li>
+      </ul>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container">
+      <h1>To-Do List</h1>
+      <ul class="task-list">
+        {% for task in tasks %}
+        <li
+          class="task-item {% if task.completed %}completed{% endif %}"
+          id="task-{{ task.id }}"
+        >
+          <form
+            action="{% url 'toggle_task' task.id %}"
+            method="post"
+            class="task-form"
+          >
+            {% csrf_token %}
+            <input
+              type="checkbox"
+              name="completed"
+              {%
+              if
+              task.completed
+              %}checked{%
+              endif
+              %}
+              onchange="this.form.submit()"
+            />
+            <span class="task-title">{{ task.title }}</span>
+          </form>
+          <a
+            href="{% url 'delete_task' task.id %}"
+            class="delete-btn"
+            onclick="deleteTask(event, {{ task.id }})"
+            >Delete</a
+          >
+        </li>
+        {% endfor %}
+      </ul>
+      <a href="{% url 'add_task' %}" class="add-task-btn">Add Task</a>
+    </div>
+
+    <!-- Notification -->
+    <div id="notification" class="notification" style="display: none">
+      Task deleted successfully!
+    </div>
+
+    <script>
+      // Show loading animation for 5 seconds
+      document.addEventListener("DOMContentLoaded", function () {
+        const loading = document.getElementById("loading");
+        setTimeout(() => {
+          loading.style.display = "none";
+        }, 5000);
+      });
+
+      // Function to handle task deletion with animation
+      function deleteTask(event, taskId) {
+        event.preventDefault(); // Prevent the default link behavior
+        const taskItem = document.getElementById(`task-${taskId}`);
+        taskItem.classList.add("deleting"); // Add the slide-out animation class
+
+        // Show notification
+        const notification = document.getElementById("notification");
+        notification.style.display = "block";
+        setTimeout(() => {
+          notification.style.display = "none";
+        }, 5000);
+
+        // Redirect to delete URL after animation
+        setTimeout(() => {
+          window.location.href = event.target.href;
+        }, 500);
+      }
+    </script>
+  </body>
+</html>

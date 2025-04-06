@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Items</title>
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #6a11cb, #2575fc);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        color: #333;
+      }
+
+      .container {
+        background: rgba(255, 255, 255, 0.9);
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        width: 350px;
+        text-align: center;
+        animation: fadeIn 1s ease-in-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      h1 {
+        color: #333;
+        margin-bottom: 20px;
+        font-size: 24px;
+        animation: slideIn 1s ease-in-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateX(-20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateX(0);
+        }
+      }
+
+      /* Form Styles */
+      form {
+        margin-bottom: 20px;
+        animation: slideIn 1.2s ease-in-out;
+      }
+
+      input[type="text"] {
+        width: calc(100% - 22px);
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease;
+      }
+
+      input[type="text"]:focus {
+        border-color: #6a11cb;
+        outline: none;
+      }
+
+      button {
+        background-color: #6a11cb;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 16px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      button:hover {
+        background-color: #2575fc;
+        transform: scale(1.05);
+      }
+
+      /* List Styles */
+      ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+        animation: fadeIn 1.5s ease-in-out;
+      }
+
+      li {
+        background: #f9f9f9;
+        margin: 10px 0;
+        padding: 12px;
+        border-radius: 8px;
+        border: 1px solid #ddd;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      li:hover {
+        transform: translateX(10px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .delete-btn {
+        background-color: #ff4d4d;
+        color: white;
+        border: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 12px;
+        transition: background-color 0.3s ease;
+      }
+
+      .delete-btn:hover {
+        background-color: #cc0000;
+      }
+
+      /* Empty State */
+      .empty-state {
+        color: #888;
+        font-style: italic;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Welcome, {{ user_name }}!</h1>
+
+      <!-- Form to add a new item -->
+      <form method="POST" action="{% url 'index' %}">
+        {% csrf_token %}
+        <input type="text" name="item" placeholder="Enter an item" required />
+        <button type="submit">Add Item</button>
+      </form>
+
+      <!-- Display the list of items -->
+      <h2>Items:</h2>
+      <ul>
+        {% for item in items %}
+        <li>
+          {{ item }}
+          <!-- Form to delete an item -->
+          <form
+            method="POST"
+            action="{% url 'delete_item' forloop.counter0 %}"
+            style="display: inline"
+          >
+            {% csrf_token %}
+            <button type="submit" class="delete-btn">Delete</button>
+          </form>
+        </li>
+        {% empty %}
+        <li class="empty-state">No items added yet.</li>
+        {% endfor %}
+      </ul>
+    </div>
+  </body>
+</html>

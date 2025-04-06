@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Task - To-Do List</title>
+    <style>
+      /* General Styles */
+      body {
+        font-family: "Arial", sans-serif;
+        background: linear-gradient(135deg, #6e9f76, #064d10);
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        overflow: hidden;
+      }
+
+      .container {
+        background: white;
+        padding: 30px;
+        border-radius: 16px;
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 400px;
+        text-align: center;
+        transform: scale(0.95);
+        opacity: 0;
+        animation: fadeInScale 0.5s ease-out forwards;
+      }
+
+      @keyframes fadeInScale {
+        to {
+          transform: scale(1);
+          opacity: 1;
+        }
+      }
+
+      /* Title */
+      h1 {
+        color: #00796b;
+        font-size: 32px;
+        margin-bottom: 15px;
+        animation: slideIn 0.6s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-20px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      /* Message */
+      .message {
+        color: #555;
+        font-size: 16px;
+        margin-bottom: 25px;
+        animation: fadeIn 0.8s ease-out;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* Form Styles */
+      .task-form {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+      }
+
+      .task-form input[type="text"] {
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 16px;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+      }
+
+      .task-form input[type="text"]:focus {
+        border-color: #00796b;
+        box-shadow: 0 0 8px rgba(0, 121, 107, 0.3);
+        outline: none;
+      }
+
+      .submit-btn {
+        padding: 12px;
+        background-color: #00796b;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+
+      .submit-btn:hover {
+        background-color: #004d40;
+        transform: translateY(-2px);
+      }
+
+      .submit-btn:active {
+        transform: translateY(0);
+      }
+
+      .back-btn {
+        display: block;
+        margin-top: 20px;
+        color: #00796b;
+        text-decoration: none;
+        font-size: 14px;
+        transition: color 0.3s ease;
+      }
+
+      .back-btn:hover {
+        color: #004d40;
+      }
+
+      /* Background Animation */
+      body::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(128, 222, 234, 0.1) 10%,
+          transparent 10.01%
+        );
+        background-size: 20px 20px;
+        animation: moveBackground 10s linear infinite;
+        z-index: -1;
+      }
+
+      @keyframes moveBackground {
+        from {
+          transform: translate(0, 0);
+        }
+        to {
+          transform: translate(20px, 20px);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Title -->
+      <h1>Add a New Task</h1>
+
+      <!-- Message -->
+      <p class="message">
+        Enter your task below and click "Add Task" to save it.
+      </p>
+
+      <!-- Form -->
+      <form method="post" class="task-form">
+        {% csrf_token %} {{ form.as_p }}
+        <button type="submit" class="submit-btn">Add Task</button>
+      </form>
+
+      <!-- Back Button -->
+      <a href="{% url 'task_list' %}" class="back-btn">Back to List</a>
+    </div>
+  </body>
+</html>

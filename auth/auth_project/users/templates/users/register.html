@@ -1,0 +1,511 @@
+{% extends 'users/base.html' %} {% block content %}
+<style>
+  /* Base animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideRight {
+    from {
+      transform: translateX(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      background-color: rgba(231, 76, 60, 0.1);
+    }
+    50% {
+      transform: scale(1.02);
+      background-color: rgba(231, 76, 60, 0.2);
+    }
+    100% {
+      transform: scale(1);
+      background-color: rgba(231, 76, 60, 0.1);
+    }
+  }
+
+  @keyframes buttonHover {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  /* Animation classes */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-slide-right {
+    animation: slideRight 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s infinite;
+  }
+
+  /* Form styling */
+  .form-container {
+    max-width: 500px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+  }
+
+  .form-title {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+  }
+
+  .form-card {
+    background: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .form-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+  }
+
+  .registration-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+  }
+
+  .form-group label i {
+    margin-right: 0.5rem;
+    color: #3498db;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="email"],
+  .form-group input[type="password"] {
+    padding: 0.8rem 1rem;
+    border: 1px solid #dcdfe6;
+    border-radius: 6px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+  }
+
+  .form-group input[type="text"]:focus,
+  .form-group input[type="email"]:focus,
+  .form-group input[type="password"]:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    outline: none;
+  }
+
+  .form-error {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem;
+    border-radius: 4px;
+    background-color: rgba(231, 76, 60, 0.1);
+  }
+
+  .file-input-wrapper {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    flex-wrap: wrap;
+  }
+
+  .file-input {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+  }
+
+  .file-input-label {
+    cursor: pointer;
+    background-color: #e9ecef;
+    color: #495057;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    font-weight: 500;
+    display: inline-block;
+    transition: background-color 0.3s;
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .file-input-label:hover {
+    background-color: #dee2e6;
+  }
+
+  .file-name {
+    font-size: 0.9rem;
+    color: #6c757d;
+  }
+
+  .btn {
+    display: inline-block;
+    font-weight: 500;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 0.8rem 1rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 0.25rem;
+    transition: all 0.3s;
+    margin-top: 1rem;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+  }
+
+  .btn-primary:hover {
+    background-color: #2980b9;
+  }
+
+  .btn-animated {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .btn-animated:hover {
+    animation: buttonHover 1s infinite;
+  }
+
+  .btn-animated:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    transition: all 0.3s;
+    z-index: -1;
+  }
+
+  .btn-animated:hover:before {
+    left: 100%;
+  }
+
+  .form-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #6c757d;
+  }
+
+  .text-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+
+  .text-link:hover {
+    color: #2980b9;
+    text-decoration: underline;
+  }
+
+  /* Password strength indicator */
+  .password-strength {
+    height: 4px;
+    background-color: #e74c3c;
+    margin-top: 5px;
+    transition: width 0.3s, background-color 0.3s;
+    border-radius: 2px;
+    position: relative;
+    display: none;
+  }
+
+  .password-strength::after {
+    content: attr(data-strength);
+    position: absolute;
+    right: 0;
+    top: 5px;
+    font-size: 0.75rem;
+    color: #6c757d;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .form-title {
+      font-size: 1.8rem;
+    }
+
+    .form-card {
+      padding: 1.5rem;
+    }
+
+    .file-input-wrapper {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .file-input-label {
+      margin-bottom: 0.5rem;
+      margin-right: 0;
+      width: 100%;
+      text-align: center;
+    }
+
+    .file-name {
+      margin-top: 0.3rem;
+    }
+  }
+</style>
+
+<div class="form-container animate-fade-in">
+  <h1 class="form-title animate-slide-down">Create Account</h1>
+
+  <div class="form-card animate-scale-in">
+    <form method="POST" enctype="multipart/form-data" class="registration-form">
+      {% csrf_token %}
+
+      <div class="form-group animate-slide-right" style="animation-delay: 0.1s">
+        <label for="{{ form.username.id_for_label }}">
+          <i class="fas fa-user"></i> Username
+        </label>
+        {{ form.username }} {% if form.username.errors %}
+        <div class="form-error animate-pulse">{{ form.username.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group animate-slide-right" style="animation-delay: 0.2s">
+        <label for="{{ form.email.id_for_label }}">
+          <i class="fas fa-envelope"></i> Email
+        </label>
+        {{ form.email }} {% if form.email.errors %}
+        <div class="form-error animate-pulse">{{ form.email.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group animate-slide-right" style="animation-delay: 0.3s">
+        <label for="{{ form.password1.id_for_label }}">
+          <i class="fas fa-lock"></i> Password
+        </label>
+        {{ form.password1 }} {% if form.password1.errors %}
+        <div class="form-error animate-pulse">{{ form.password1.errors }}</div>
+        {% endif %}
+        <div class="password-strength" style="display: none"></div>
+      </div>
+
+      <div class="form-group animate-slide-right" style="animation-delay: 0.4s">
+        <label for="{{ form.password2.id_for_label }}">
+          <i class="fas fa-lock"></i> Confirm Password
+        </label>
+        {{ form.password2 }} {% if form.password2.errors %}
+        <div class="form-error animate-pulse">{{ form.password2.errors }}</div>
+        {% endif %}
+      </div>
+
+      {% if form.profile_picture %}
+      <div class="form-group animate-slide-right" style="animation-delay: 0.5s">
+        <label for="{{ form.profile_picture.id_for_label }}">
+          <i class="fas fa-image"></i> Profile Picture (Optional)
+        </label>
+        <div class="file-input-wrapper">
+          <input
+            type="file"
+            name="profile_picture"
+            id="{{ form.profile_picture.id_for_label }}"
+            class="file-input"
+            accept="image/*"
+          />
+          <label
+            for="{{ form.profile_picture.id_for_label }}"
+            class="file-input-label"
+            >Choose a file</label
+          >
+          <span class="file-name">No file chosen</span>
+        </div>
+        {% if form.profile_picture.errors %}
+        <div class="form-error animate-pulse">
+          {{ form.profile_picture.errors }}
+        </div>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-animated animate-fade-in"
+        style="animation-delay: 0.6s"
+      >
+        <span>Register</span>
+      </button>
+    </form>
+  </div>
+
+  <div class="form-footer animate-slide-up">
+    <p>
+      Already have an account?
+      <a href="{% url 'login' %}" class="text-link">Login</a>
+    </p>
+    <p>
+      Want to go home?
+      <a href="{% url 'home' %}" class="text-link">Home</a>
+    </p>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // File input display filename
+    const fileInput = document.getElementById(
+      "{{ form.profile_picture.id_for_label }}"
+    );
+    const fileName = document.querySelector(".file-name");
+
+    if (fileInput && fileName) {
+      fileInput.addEventListener("change", function (e) {
+        if (this.files && this.files.length > 0) {
+          fileName.textContent = this.files[0].name;
+        } else {
+          fileName.textContent = "No file chosen";
+        }
+      });
+    }
+
+    // Add password strength indicator for password field
+    const passwordField = document.getElementById(
+      "{{ form.password1.id_for_label }}"
+    );
+    const strengthIndicator = document.querySelector(".password-strength");
+
+    if (passwordField && strengthIndicator) {
+      passwordField.addEventListener("input", function () {
+        const password = this.value;
+        let strength = 0;
+        let status = "";
+
+        if (password.length >= 8) strength += 1;
+        if (password.match(/[a-z]/) && password.match(/[A-Z]/)) strength += 1;
+        if (password.match(/[0-9]/)) strength += 1;
+        if (password.match(/[^a-zA-Z0-9]/)) strength += 1;
+
+        switch (strength) {
+          case 0:
+            status = "";
+            strengthIndicator.style.display = "none";
+            break;
+          case 1:
+            status = "Weak";
+            strengthIndicator.style.backgroundColor = "#e74c3c";
+            strengthIndicator.style.width = "25%";
+            break;
+          case 2:
+            status = "Fair";
+            strengthIndicator.style.backgroundColor = "#f39c12";
+            strengthIndicator.style.width = "50%";
+            break;
+          case 3:
+            status = "Good";
+            strengthIndicator.style.backgroundColor = "#3498db";
+            strengthIndicator.style.width = "75%";
+            break;
+          case 4:
+            status = "Strong";
+            strengthIndicator.style.backgroundColor = "#2ecc71";
+            strengthIndicator.style.width = "100%";
+            break;
+        }
+
+        if (password.length > 0) {
+          strengthIndicator.style.display = "block";
+          strengthIndicator.setAttribute("data-strength", status);
+        } else {
+          strengthIndicator.style.display = "none";
+        }
+      });
+    }
+  });
+</script>
+{% endblock %}

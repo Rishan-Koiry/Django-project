@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Django Auth System</title>
+    {% load static %}
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="{% static 'users/css/style.css' %}"
+    />
+  </head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">RK</div>
+        <ul class="nav-links">
+          {% if user.is_authenticated %}
+          <li><a href="{% url 'dashboard' %}">Dashboard</a></li>
+          <form method="POST" action="{% url 'logout' %}" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="action-link logout-btn">
+              <i class="fas fa-sign-out-alt"></i>
+              <span>Logout</span>
+            </button>
+          </form>
+          {% else %}
+          <li><a href="{% url 'login' %}">Login</a></li>
+          <li><a href="{% url 'register' %}">Register</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <div class="container">
+        {% if messages %} {% for message in messages %}
+        <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+        {% endfor %} {% endif %} {% block content %}{% endblock %}
+      </div>
+    </main>
+
+    <footer>
+      <p>&copy; 2025 Django Auth System</p>
+    </footer>
+  </body>
+</html>

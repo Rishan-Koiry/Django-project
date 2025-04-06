@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>RK FUTURE SCHOOL</title>
+    <!-- Using only CDN libraries -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <link rel="icon" href="{% static 'homepage/images/image.png' %}" />
+    <style>
+      :root {
+        /* Color palette - expanded with more options */
+        --dark-blue: #0d1b2a;
+        --blue-secondary: #1b263b;
+        --blue-accent: #415a77;
+        --blue-light: #778da9;
+        --text-color: #e0e1dd;
+        --highlight: #4d8cf5;
+        --orange-accent: #ff7b00;
+        --orange-light: #ff9e44;
+        --orange-dark: #e65c00;
+        --green-accent: #4caf50;
+        --green-light: #6abf69;
+        --green-dark: #357a38;
+
+        /* Animation durations */
+        --transition-fast: 0.2s;
+        --transition-medium: 0.3s;
+        --transition-slow: 0.5s;
+
+        /* Common values */
+        --border-radius-sm: 8px;
+        --border-radius-md: 15px;
+        --border-radius-lg: 30px;
+        --shadow-sm: 0 5px 15px rgba(0, 0, 0, 0.2);
+        --shadow-md: 0 8px 20px rgba(0, 0, 0, 0.3);
+        --shadow-lg: 0 15px 30px rgba(0, 0, 0, 0.4);
+      }
+
+      /* Base styles with smoother transitions */
+      body {
+        background-color: var(--dark-blue);
+        color: var(--text-color);
+        font-family: "Poppins", Arial, sans-serif;
+        overflow-x: hidden;
+        transition: background-color var(--transition-medium) ease;
+        line-height: 1.6;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Global animations */
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @keyframes pulse {
+        0% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.05);
+        }
+        100% {
+          transform: scale(1);
+        }
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-15px) rotate(3deg);
+        }
+      }
+
+      @keyframes shimmer {
+        0% {
+          background-position: -200% 0;
+        }
+        100% {
+          background-position: 200% 0;
+        }
+      }
+
+      @keyframes gradientFlow {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Improved contact section */
+      .contact-section {
+        position: relative;
+        background: linear-gradient(
+          135deg,
+          var(--blue-secondary) 0%,
+          rgba(0, 0, 0, 0.8) 100%
+        );
+        padding: 80px 0;
+        overflow: hidden;
+        animation: gradientFlow 15s ease infinite;
+        background-size: 200% 200%;
+        border-radius: var(--border-radius-lg);
+      }
+
+      .contact-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("/api/placeholder/1200/800") center/cover;
+        opacity: 0.1;
+        z-index: 0;
+        animation: pulse 8s infinite ease-in-out;
+      }
+
+      .col-md-4 {
+        margin-bottom: 30px;
+        animation: fadeIn 0.8s ease-out forwards;
+      }
+
+      /* Improved section titles with better animations */
+      .section-title {
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin-bottom: 25px;
+        background: linear-gradient(
+          90deg,
+          #ffffff,
+          var(--orange-accent),
+          var(--orange-light)
+        );
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        display: inline-block;
+        position: relative;
+        animation: shimmer 3s infinite linear;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 0;
+        height: 4px;
+        background: linear-gradient(
+          90deg,
+          var(--orange-accent),
+          var(--green-accent)
+        );
+        border-radius: 2px;
+        animation: expandWidth 1s 0.5s forwards ease-out;
+      }
+
+      @keyframes expandWidth {
+        from {
+          width: 0;
+        }
+        to {
+          width: 80px;
+        }
+      }
+
+      /* Enhanced contact card with better hover effects */
+      .contact-card {
+        background: rgba(27, 38, 59, 0.95);
+        border-radius: var(--border-radius-md);
+        overflow: hidden;
+        box-shadow: 0 0 25px rgba(255, 123, 0, 0.3);
+        border: 1px solid rgba(255, 123, 0, 0.2);
+        position: relative;
+        z-index: 1;
+        transition: all var(--transition-medium) cubic-bezier(0.2, 0.8, 0.2, 1);
+        transform-origin: center bottom;
+      }
+
+      .contact-card:hover {
+        box-shadow: 0 10px 35px rgba(255, 123, 0, 0.5);
+      }
+
+      .contact-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          45deg,
+          transparent,
+          rgba(255, 123, 0, 0.05),
+          transparent
+        );
+        background-size: 200% 200%;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity var(--transition-medium);
+      }
+
+      .contact-card:hover::before {
+        opacity: 1;
+        animation: gradientFlow 3s ease infinite;
+      }
+
+      .card-header {
+        background: linear-gradient(
+          135deg,
+          var(--blue-accent) 0%,
+          var(--blue-secondary) 100%
+        );
+        border-bottom: 2px solid var(--orange-accent);
+        padding: 20px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .card-header::after {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(
+          circle,
+          rgba(255, 123, 0, 0.2) 0%,
+          transparent 70%
+        );
+        opacity: 0;
+        transition: opacity var(--transition-medium);
+      }
+
+      .contact-card:hover .card-header::after {
+        opacity: 1;
+        animation: pulse 2s infinite;
+      }
+
+      .card-title-glow {
+        color: white;
+        text-shadow: 0 0 10px rgba(255, 123, 0, 0.7);
+        font-weight: 700;
+        font-size: 1.8rem;
+        transition: all var(--transition-medium);
+      }
+
+      .contact-card:hover .card-title-glow {
+        text-shadow: 0 0 15px rgba(255, 123, 0, 0.9),
+          0 0 30px rgba(255, 123, 0, 0.6);
+        letter-spacing: 0.5px;
+      }
+
+      /* Enhanced form elements with better feedback */
+      .form-section {
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid rgba(255, 123, 0, 0.2);
+        transition: border-color var(--transition-medium);
+      }
+
+      .form-section:hover {
+        border-bottom: 1px solid rgba(255, 123, 0, 0.4);
+      }
+
+      .form-section:last-child {
+        border-bottom: none;
+      }
+
+      .form-section-title {
+        color: var(--orange-accent);
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 8px;
+        border-bottom: 1px dashed rgba(255, 123, 0, 0.3);
+        transition: all var(--transition-medium);
+      }
+
+      .form-section:hover .form-section-title {
+        color: var(--orange-light);
+        padding-left: 5px;
+      }
+
+      .section-icon {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 32px;
+        height: 32px;
+        background: var(--orange-accent);
+        border-radius: 50%;
+        margin-right: 10px;
+        color: white;
+        font-size: 0.9rem;
+        transition: all var(--transition-medium);
+      }
+
+      .form-section:hover .section-icon {
+        transform: rotate(10deg) scale(1.1);
+        background: var(--orange-light);
+      }
+
+      /* Enhanced input fields with better visual feedback */
+      .input-glow {
+        position: relative;
+        transition: all var(--transition-medium) ease;
+        margin-bottom: 15px;
+      }
+
+      .input-glow:focus-within {
+        box-shadow: 0 0 15px rgba(255, 123, 0, 0.4);
+        transform: translateY(-2px);
+      }
+
+      .input-glow::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 4px;
+        z-index: -1;
+        opacity: 0;
+        transition: opacity var(--transition-fast);
+      }
+
+      .input-glow:focus-within::before {
+        opacity: 1;
+        animation: pulse 2s infinite;
+      }
+
+      .input-glow .input-group-text {
+        background-color: var(--orange-accent);
+        color: white;
+        border: 1px solid rgba(255, 123, 0, 0.5);
+        transition: all var(--transition-medium);
+      }
+
+      .input-glow:focus-within .input-group-text {
+        background-color: var(--orange-light);
+      }
+
+      .input-glow .form-control {
+        background-color: rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(255, 123, 0, 0.3);
+        color: white;
+        transition: all var(--transition-medium);
+      }
+
+      .input-glow .form-control:focus {
+        background-color: rgba(0, 0, 0, 0.3);
+        border-color: var(--orange-accent);
+        box-shadow: none;
+        transform: translateX(3px);
+      }
+
+      .input-glow .form-control::placeholder {
+        color: rgba(255, 255, 255, 0.5);
+        transition: all var(--transition-medium);
+      }
+
+      .input-glow .form-control:focus::placeholder {
+        opacity: 0.7;
+        transform: translateX(5px);
+      }
+
+      /* Enhanced submit button with advanced effects */
+      .submit-btn {
+        background: linear-gradient(
+          135deg,
+          var(--orange-accent) 0%,
+          var(--orange-dark) 100%
+        );
+        border: none;
+        color: white;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 12px 30px;
+        border-radius: 50px;
+        position: relative;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(255, 123, 0, 0.4);
+        transition: all var(--transition-medium) cubic-bezier(0.2, 0.8, 0.2, 1);
+        z-index: 1;
+      }
+
+      .submit-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: all var(--transition-slow) ease;
+        z-index: -1;
+      }
+
+      .submit-btn::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          var(--orange-light) 0%,
+          var(--orange-accent) 100%
+        );
+        z-index: -2;
+        opacity: 0;
+        transition: opacity var(--transition-medium);
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-5px) scale(1.03);
+        box-shadow: 0 10px 25px rgba(255, 123, 0, 0.6);
+        letter-spacing: 1.5px;
+      }
+
+      .submit-btn:hover::before {
+        left: 100%;
+      }
+
+      .submit-btn:hover::after {
+        opacity: 1;
+      }
+
+      .submit-btn:active {
+        transform: translateY(-2px) scale(0.98);
+        box-shadow: 0 5px 15px rgba(255, 123, 0, 0.4);
+      }
+
+      /* Improved Navbar with smoother animations */
+      .navbar {
+        background-color: rgba(27, 38, 59, 0.95);
+        box-shadow: 0 2px 15px rgba(0, 0, 0, 0.4);
+        position: sticky;
+        top: 0;
+        z-index: 1000;
+        opacity: 0.95;
+        backdrop-filter: blur(10px);
+        padding: 15px 0;
+        transition: all var(--transition-medium) ease;
+      }
+
+      .navbar.scrolled {
+        background-color: rgba(27, 38, 59, 0.85);
+        padding: 10px 0;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+      }
+
+      .navbar-brand {
+        font-weight: 700;
+        font-size: 1.5rem;
+        position: relative;
+        transition: all var(--transition-medium);
+      }
+
+      .navbar-brand::after {
+        content: "";
+        position: absolute;
+        bottom: -3px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: var(--orange-accent);
+        transition: width var(--transition-medium);
+      }
+
+      .navbar-brand:hover::after {
+        width: 100%;
+      }
+
+      .nav-link {
+        margin: 0 5px;
+        padding: 5px 10px;
+        font-weight: 500;
+        position: relative;
+        transition: all var(--transition-medium);
+        overflow: hidden;
+      }
+
+      .nav-link::before {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background-color: var(--orange-accent);
+        transform: translateX(-100%);
+        transition: transform var(--transition-medium) ease;
+      }
+
+      .nav-link:hover {
+        color: var(--orange-accent) !important;
+        transform: translateY(-2px);
+      }
+
+      .nav-link:hover::before {
+        transform: translateX(0);
+      }
+
+      /* Enhanced Hero section with parallax effect */
+      .hero-section {
+        background: linear-gradient(
+          135deg,
+          var(--blue-secondary) 0%,
+          var(--orange-accent) 100%
+        );
+        background-size: 200% 200%;
+        animation: gradientFlow 15s ease infinite;
+        padding: 100px 0;
+        margin-bottom: 40px;
+        border-radius: 0 0 30px 30px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-section::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: radial-gradient(
+          circle at center,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%
+        );
+        opacity: 0.7;
+        z-index: 1;
+        animation: pulse 10s infinite alternate;
+      }
+
+      .hero-section::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("/api/placeholder/1200/800") center/cover;
+        opacity: 0.05;
+        z-index: 0;
+        animation: parallax 10s infinite alternate ease-in-out;
+        transform-origin: center center;
+      }
+
+      @keyframes parallax {
+        0% {
+          transform: scale(1.1) translateY(-5px);
+        }
+        100% {
+          transform: scale(1) translateY(5px);
+        }
+      }
+
+      .hero-title {
+        font-size: 3rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        background: linear-gradient(90deg, #ffffff, #ffcc80);
+        background-size: 200% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        z-index: 2;
+        position: relative;
+        animation: shimmer 5s infinite linear;
+      }
+
+      .hero-text {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+        position: relative;
+        z-index: 2;
+        animation: fadeIn 1s ease-out;
+      }
+
+      .hero-btn {
+        padding: 12px 30px;
+        font-weight: 600;
+        border-radius: 30px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        transition: all var(--transition-medium) cubic-bezier(0.2, 0.8, 0.2, 1);
+        box-shadow: 0 5px 15px rgba(255, 123, 0, 0.4);
+        background: var(--orange-accent);
+        border: none;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        z-index: 2;
+      }
+
+      .hero-btn::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          90deg,
+          transparent,
+          rgba(255, 255, 255, 0.3),
+          transparent
+        );
+        transition: all var(--transition-slow) ease;
+        z-index: -1;
+      }
+
+      .hero-btn:hover {
+        transform: translateY(-5px) scale(1.05);
+        box-shadow: 0 10px 25px rgba(255, 123, 0, 0.6);
+        letter-spacing: 1.5px;
+      }
+
+      .hero-btn:hover::before {
+        left: 100%;
+      }
+
+      /* Enhanced Feature Boxes with 3D hover effect */
+      .feature-box {
+        padding: 30px;
+        border-radius: var(--border-radius-md);
+        background: linear-gradient(
+          145deg,
+          var(--blue-secondary),
+          var(--blue-accent)
+        );
+        height: 100%;
+        transition: all var(--transition-medium) cubic-bezier(0.2, 0.8, 0.2, 1);
+        box-shadow: var(--shadow-sm);
+        border: 1px solid rgba(119, 141, 169, 0.1);
+        margin-bottom: 30px;
+        position: relative;
+        z-index: 1;
+        overflow: hidden;
+        transform-style: preserve-3d;
+        perspective: 1000px;
+      }
+
+      .feature-box::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          135deg,
+          transparent,
+          rgba(255, 123, 0, 0.05),
+          transparent
+        );
+        opacity: 0;
+        transition: opacity var(--transition-medium);
+        z-index: -1;
+      }
+
+      .feature-box:hover {
+        transform: translateY(-15px) rotateX(5deg) rotateY(-5deg);
+        box-shadow: var(--shadow-lg);
+        border-color: rgba(255, 123, 0, 0.2);
+      }
+
+      .feature-box:hover::before {
+        opacity: 1;
+        animation: gradientFlow 3s ease infinite;
+      }
+
+      .feature-icon {
+        font-size: 2.2rem;
+        margin-bottom: 20px;
+        color: var(--orange-accent);
+        background: rgba(255, 123, 0, 0.1);
+        width: 70px;
+        height: 70px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: var(--border-radius-sm);
+        transition: all var(--transition-medium)
+          cubic-bezier(0.34, 1.56, 0.64, 1);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .feature-box:hover .feature-icon {
+        background: rgba(255, 123, 0, 0.2);
+        transform: rotate(15deg) scale(1.1) translateZ(20px);
+        color: var(--orange-light);
+      }
+
+      .feature-title {
+        font-weight: 700;
+        margin-bottom: 15px;
+        position: relative;
+        padding-bottom: 10px;
+        transition: transform var(--transition-medium);
+      }
+
+      .feature-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--orange-accent);
+        transition: width var(--transition-medium);
+      }
+
+      .feature-box:hover .feature-title {
+        transform: translateZ(15px);
+      }
+
+      .feature-box:hover .feature-title::after {
+        width: 60px;
+        background: linear-gradient(
+          90deg,
+          var(--orange-accent),
+          var(--orange-light)
+        );
+      }
+
+      /* Improved loading animation */
+      .loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        overflow: hidden;
+        transition: opacity 0.8s ease, visibility 0.8s;
+      }
+
+      .loader.hidden {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #2a1d0d, #1b263b, #415a77, #0d1b2a);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Improved floating shapes with 3D effect */
+      .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        perspective: 1000px;
+      }
+
+      .shape {
+        position: absolute;
+        background: rgba(255, 140, 66, 0.3);
+        border: 2px solid rgba(255, 140, 66, 0.5);
+        box-shadow: 0 0 20px rgba(255, 140, 66, 0.3);
+        animation: float3D 8s infinite ease-in-out;
+        transform-style: preserve-3d;
+      }
+
+      @keyframes float3D {
+        0%,
+        100% {
+          transform: translateY(0) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+        }
+        25% {
+          transform: translateY(-20px) rotateX(10deg) rotateY(20deg)
+            rotateZ(5deg);
+        }
+        50% {
+          transform: translateY(-40px) rotateX(20deg) rotateY(35deg)
+            rotateZ(10deg);
+        }
+        75% {
+          transform: translateY(-20px) rotateX(10deg) rotateY(20deg)
+            rotateZ(15deg);
+        }
+      }
+
+      .shape.circle {
+        border-radius: 50%;
+      }
+
+      .shape.square {
+        border-radius: 10%;
+      }
+
+      .shape.triangle {
+        width: 0;
+        height: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        border-bottom: 60px solid rgba(255, 140, 66, 0.5);
+        background: none;
+        box-shadow: 0 10px 20px rgba(255, 140, 66, 0.2);
+      }
+
+      .shape.star {
+        clip-path: polygon(
+          50% 0%,
+          61% 35%,
+          98% 35%,
+          68% 57%,
+          79% 91%,
+          50% 70%,
+          21% 91%,
+          32% 57%,
+          2% 35%,
+          39% 35%
+        );
+      }
+
+      /* Enhanced shapes animation */
+      .shape-1,
+      .shape-11 {
+        width: 100px;
+        height: 100px;
+        top: 20%;
+        left: 10%;
+        animation-duration: 8s;
+        animation-delay: 0.5s;
+      }
+
+      .shape-2,
+      .shape-12 {
+        width: 150px;
+        height: 150px;
+        top: 50%;
+        left: 70%;
+        animation-duration: 10s;
+        animation-delay: 0.2s;
+      }
+
+      .shape-3,
+      .shape-13 {
+        top: 70%;
+        left: 30%;
+        animation-duration: 12s;
+        animation-delay: 1s;
+      }
+
+      .shape-4,
+      .shape-14 {
+        width: 120px;
+        height: 120px;
+        top: 40%;
+        left: 50%;
+        animation-duration: 9s;
+        animation-delay: 0.7s;
+      }
+
+      .shape-5,
+      .shape-15 {
+        width: 80px;
+        height: 80px;
+        top: 30%;
+        left: 80%;
+        animation-duration: 7s;
+        animation-delay: 1.5s;
+      }
+
+      .shape-6,
+      .shape-16 {
+        width: 90px;
+        height: 90px;
+        top: 10%;
+        left: 60%;
+        animation-duration: 11s;
+        animation-delay: 0.3s;
+      }
+
+      .shape-7,
+      .shape-17 {
+        top: 60%;
+        left: 20%;
+        animation-duration: 13s;
+        animation-delay: 1.2s;
+      }
+
+      .shape-8,
+      .shape-18 {
+        width: 110px;
+        height: 110px;
+        top: 80%;
+        left: 40%;
+        animation-duration: 14s;
+        animation-delay: 0.8s;
+      }
+
+      .shape-9,
+      .shape-19 {
+        width: 110px;
+        height: 110px;
+        top: 80%;
+        left: 40%;
+        animation-duration: 14s;
+        animation-delay: 1.1s;
+      }
+
+      /* Enhanced holographic loader text */
+      .loader-content {
+        text-align: center;
+        z-index: 1;
+        transform-style: preserve-3d;
+      }
+
+      .loader-text {
+        font-size: 3.5rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #ffffff, #eeeeee, #7d7977, #ffffff);
+        background-size: 300% auto;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: glow 2s infinite alternate, hologram 3s infinite ease-in-out,
+          shimmer 5s infinite linear;
+        position: relative;
+        letter-spacing: 2px;
+      }
+
+      @keyframes glow {
+        0% {
+          text-shadow: 0 0 10px rgba(255, 140, 66, 0.8),
+            0 0 20px rgba(255, 140, 66, 0.8), 0 0 30px rgba(255, 140, 66, 0.8);
+          transform: scale(0.98) translateZ(0);
+        }
+        100% {
+          text-shadow: 0 0 20px rgba(255, 140, 66, 1),
+            0 0 40px rgba(255, 140, 66, 1), 0 0 60px rgba(255, 140, 66, 1),
+            0 0 80px rgba(255, 140, 66, 0.5);
+          transform: scale(1.02) translateZ(20px);
+        }
+      }
+
+      @keyframes hologram {
+        0%,
+        100% {
+          transform: skew(0deg, 0deg) translateZ(0);
+          filter: hue-rotate(0deg);
+        }
+        25% {
+          transform: skew(2deg, 2deg) translateZ(5px);
+          filter: hue-rotate(15deg);
+        }
+        50% {
+          transform: skew(-2deg, -2deg) translateZ(10px);
+          filter: hue-rotate(0deg);
+        }
+        75% {
+          transform: skew(1deg, 1deg) translateZ(5px);
+          filter: hue-rotate(-15deg);
+        }
+      }
+
+      /* Custom scrollbar */
+      ::-webkit-scrollbar {
+        width: 10px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: var(--blue-secondary);
+        border-radius: 5px;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: linear-gradient(var(--orange-accent), var(--orange-dark));
+        border-radius: 5px;
+        border: 2px solid var(--blue-secondary);
+        transition: all var(--transition-medium);
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: linear-gradient(var(--orange-light), var(--orange-accent));
+      }
+
+      /* Text selection styling */
+      ::selection {
+        background-color: rgba(255, 123, 0, 0.3);
+        color: white;
+        text-shadow: 0 0 5px rgba(255, 123, 0, 0.5);
+      }
+
+      .hero-text {
+        font-size: 1.2rem;
+        margin-bottom: 30px;
+        max-width: 700px;
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .hero-btn {
+        padding: 10px 25px;
+        font-weight: 600;
+        border-radius: 30px;
+        text-transform: uppercase;
+        transition: all 0.3s ease;
+        box-shadow: 0 5px 15px rgba(255, 123, 0, 0.4);
+        background: var(--orange-accent);
+        border: none;
+        color: white;
+      }
+
+      .hero-btn:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(255, 123, 0, 0.6);
+      }
+
+      /* Feature boxes - mixed colors */
+      .feature-box {
+        padding: 25px;
+        border-radius: 15px;
+        background: linear-gradient(
+          145deg,
+          var(--blue-secondary),
+          var(--blue-accent)
+        );
+        height: 100%;
+        transition: all 0.4s ease;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        border: 1px solid rgba(119, 141, 169, 0.1);
+        margin-bottom: 20px;
+      }
+
+      .feature-box:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .feature-icon {
+        font-size: 2rem;
+        margin-bottom: 15px;
+        color: var(--orange-accent);
+        background: rgba(255, 123, 0, 0.1);
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 15px;
+        transition: all 0.4s ease;
+      }
+
+      .feature-box:hover .feature-icon {
+        background: rgba(255, 123, 0, 0.2);
+        transform: rotate(10deg);
+      }
+
+      .feature-title {
+        font-weight: 700;
+        margin-bottom: 15px;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .feature-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--orange-accent);
+      }
+
+      /* About section */
+      .about-section {
+        padding: 60px 0;
+      }
+
+      .about-img {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        position: relative;
+      }
+
+      .about-img img {
+        width: 100%;
+        height: auto;
+        transition: transform 0.5s ease;
+      }
+
+      .section-title {
+        font-size: 2.2rem;
+        font-weight: 800;
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 4px;
+        background: var(--green-accent);
+      }
+
+      .feature-box {
+        margin-bottom: 40px;
+      }
+      .about-text {
+        margin-bottom: 20px;
+        line-height: 1.6;
+      }
+
+      /* Programs section */
+      .programs-section {
+        padding: 60px 0;
+      }
+
+      .program-card {
+        background-color: var(--blue-secondary);
+        border: none;
+        border-radius: 15px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .program-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .program-header {
+        background-color: var(--green-accent);
+        padding: 20px;
+        position: relative;
+      }
+
+      .program-title {
+        font-weight: 700;
+        color: white;
+      }
+
+      .program-body {
+        padding: 20px;
+      }
+
+      /* Faculty section */
+      .faculty-section {
+        padding: 60px 0;
+      }
+
+      .faculty-card {
+        border-radius: 15px;
+        overflow: hidden;
+        background-color: var(--blue-secondary);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        margin-bottom: 30px;
+        transition: all 0.4s ease;
+      }
+
+      .faculty-img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+      }
+
+      .faculty-content {
+        padding: 20px;
+      }
+
+      .faculty-name {
+        font-weight: 700;
+        margin-bottom: 5px;
+      }
+
+      .faculty-position {
+        color: var(--orange-accent);
+        font-weight: 500;
+        font-size: 0.9rem;
+        margin-bottom: 10px;
+      }
+
+      /* Footer styles */
+      .footer {
+        background-color: var(--blue-secondary);
+        padding: 60px 0 20px;
+        margin-top: 60px;
+        position: relative;
+        border-radius: 50px 50px 0 0;
+      }
+
+      .footer-title {
+        font-weight: 700;
+        margin-bottom: 20px;
+        position: relative;
+        display: inline-block;
+        padding-bottom: 10px;
+      }
+
+      .footer-title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 40px;
+        height: 3px;
+        background: var(--green-accent);
+      }
+
+      .copyright {
+        padding-top: 20px;
+        border-top: 1px solid rgba(119, 141, 169, 0.2);
+        margin-top: 40px;
+      }
+
+      /* Responsive adjustments */
+      @media (max-width: 767px) {
+        .hero-title {
+          font-size: 2rem;
+        }
+        .section-title {
+          font-size: 1.8rem;
+        }
+      }
+      /* Loader Styles */
+      /* Loader Styles */
+      /* Loader Styles */
+      /* Loader Styles */
+      .loader {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+        overflow: hidden;
+      }
+
+      .background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(135deg, #2a1d0d, #1b263b, #415a77, #0d1b2a);
+        background-size: 400% 400%;
+        animation: gradientShift 10s ease infinite;
+      }
+
+      @keyframes gradientShift {
+        0% {
+          background-position: 0% 50%;
+        }
+        50% {
+          background-position: 100% 50%;
+        }
+        100% {
+          background-position: 0% 50%;
+        }
+      }
+
+      /* Floating 3D Shapes */
+      .floating-shapes {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+      }
+
+      .shape {
+        position: absolute;
+        background: rgba(255, 140, 66, 0.3);
+        border: 2px solid rgba(255, 140, 66, 0.5);
+        animation: float 6s infinite ease-in-out;
+      }
+
+      .shape.circle {
+        border-radius: 50%;
+      }
+
+      .shape.square {
+        border-radius: 10%;
+      }
+
+      .shape.triangle {
+        width: 0;
+        height: 0;
+        border-left: 30px solid transparent;
+        border-right: 30px solid transparent;
+        border-bottom: 60px solid rgba(255, 140, 66, 0.5);
+      }
+
+      .shape.star {
+        clip-path: polygon(
+          50% 0%,
+          61% 35%,
+          98% 35%,
+          68% 57%,
+          79% 91%,
+          50% 70%,
+          21% 91%,
+          32% 57%,
+          2% 35%,
+          39% 35%
+        );
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0) rotate(0deg);
+        }
+        50% {
+          transform: translateY(-20px) rotate(180deg);
+        }
+      }
+
+      /* Holographic Text */
+      .loader-content {
+        text-align: center;
+        z-index: 1;
+      }
+
+      .loader-text {
+        font-size: 3rem;
+        font-weight: 800;
+        background: linear-gradient(90deg, #ffffff, #eeeeee, #7d7977);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: glow 2s infinite alternate, hologram 3s infinite ease-in-out;
+      }
+
+      @keyframes glow {
+        0% {
+          text-shadow: 0 0 10px rgba(255, 140, 66, 0.8),
+            0 0 20px rgba(255, 140, 66, 0.8), 0 0 30px rgba(255, 140, 66, 0.8);
+        }
+        100% {
+          text-shadow: 0 0 20px rgba(255, 140, 66, 1),
+            0 0 40px rgba(255, 140, 66, 1), 0 0 60px rgba(255, 140, 66, 1);
+        }
+      }
+
+      @keyframes hologram {
+        0%,
+        100% {
+          transform: skew(0deg, 0deg);
+        }
+        25% {
+          transform: skew(2deg, 2deg);
+        }
+        50% {
+          transform: skew(-2deg, -2deg);
+        }
+        75% {
+          transform: skew(1deg, 1deg);
+        }
+      }
+      .shape-1 {
+        width: 100px;
+        height: 100px;
+        top: 20%;
+        left: 10%;
+        animation-duration: 8s;
+      }
+
+      .shape-2 {
+        width: 150px;
+        height: 150px;
+        top: 50%;
+        left: 70%;
+        animation-duration: 10s;
+      }
+
+      .shape-3 {
+        top: 70%;
+        left: 30%;
+        animation-duration: 12s;
+      }
+
+      .shape-4 {
+        width: 120px;
+        height: 120px;
+        top: 40%;
+        left: 50%;
+        animation-duration: 9s;
+      }
+
+      .shape-5 {
+        width: 80px;
+        height: 80px;
+        top: 30%;
+        left: 80%;
+        animation-duration: 7s;
+      }
+
+      .shape-6 {
+        width: 90px;
+        height: 90px;
+        top: 10%;
+        left: 60%;
+        animation-duration: 11s;
+      }
+
+      .shape-7 {
+        top: 60%;
+        left: 20%;
+        animation-duration: 13s;
+      }
+
+      .shape-8 {
+        width: 110px;
+        height: 110px;
+        top: 80%;
+        left: 40%;
+        animation-duration: 14s;
+      }
+      .shape-9 {
+        width: 110px;
+        height: 110px;
+        top: 80%;
+        left: 40%;
+        animation-duration: 14s;
+      }
+      .accordion-item {
+        margin-bottom: 20px;
+      }
+      /* Custom Accordion Styles */
+      .accordion {
+        border-radius: 1px;
+        overflow: hidden;
+        box-shadow: var(--shadow-md);
+      }
+
+      .accordion-item {
+        background-color: var(--blue-secondary);
+        border: 1px solid rgba(255, 123, 0, 0.2);
+        margin-bottom: 10px;
+        border-radius: var(--border-radius-sm);
+        overflow: hidden;
+        transition: all var(--transition-medium);
+      }
+
+      .accordion-item:hover {
+        border-color: var(--orange-accent);
+        box-shadow: 0 0 15px rgba(255, 123, 0, 0.4);
+      }
+
+      .accordion-button {
+        background-color: var(--blue-secondary);
+        color: var(--text-color);
+        font-weight: 600;
+        padding: 15px 20px;
+        border: none;
+        position: relative;
+        transition: all var(--transition-medium);
+      }
+
+      .accordion-button:not(.collapsed) {
+        background-color: var(--blue-accent);
+        color: var(--orange-accent);
+        box-shadow: inset 0 -1px 0 rgba(255, 123, 0, 0.2);
+      }
+
+      .accordion-button::after {
+        filter: brightness(0) invert(1);
+        transition: transform var(--transition-medium);
+      }
+
+      .accordion-button:not(.collapsed)::after {
+        filter: brightness(0) invert(1);
+        transform: rotate(-180deg);
+      }
+
+      .accordion-button:hover {
+        background-color: var(--blue-accent);
+        color: var(--orange-light);
+      }
+
+      .accordion-button:focus {
+        box-shadow: 0 0 0 3px rgba(255, 123, 0, 0.3);
+      }
+
+      .accordion-body {
+        background-color: var(--blue-accent);
+        color: var(--text-color);
+        padding: 20px;
+        border-top: 1px solid rgba(255, 123, 0, 0.2);
+      }
+
+      /* Shining Effect on Hover */
+      .accordion-item:hover .accordion-button {
+        background: linear-gradient(
+          135deg,
+          var(--blue-accent),
+          var(--blue-secondary)
+        );
+        color: var(--orange-light);
+        text-shadow: 0 0 10px rgba(255, 123, 0, 0.7);
+      }
+
+      .accordion-item:hover .accordion-button::after {
+        filter: brightness(0) invert(1);
+      }
+      .shape-11 {
+        width: 100px;
+        height: 100px;
+        top: 40%;
+        left: 10%;
+        animation-duration: 8s;
+      }
+
+      .shape-12 {
+        width: 150px;
+        height: 150px;
+        top: 50%;
+        left: 70%;
+        animation-duration: 10s;
+      }
+
+      .shape-13 {
+        top: 10%;
+        left: 90%;
+        animation-duration: 12s;
+      }
+
+      .shape-14 {
+        width: 120px;
+        height: 120px;
+        top: 40%;
+        left: 50%;
+        animation-duration: 9s;
+      }
+
+      .shape-15 {
+        width: 80px;
+        height: 80px;
+        top: 30%;
+        left: 80%;
+        animation-duration: 7s;
+      }
+
+      .shape-16 {
+        width: 90px;
+        height: 90px;
+        top: 10%;
+        left: 60%;
+        animation-duration: 11s;
+      }
+
+      .shape-17 {
+        top: 90%;
+        left: 10%;
+        animation-duration: 13s;
+      }
+
+      .shape-18 {
+        width: 110px;
+        height: 110px;
+        top: 100%;
+        left: 10%;
+        animation-duration: 14s;
+      }
+      .shape-19 {
+        width: 110px;
+        height: 110px;
+        top: 90%;
+        left: 20%;
+        animation-duration: 14s;
+      }
+      .loader.hidden {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.5s ease;
+      }
+      /* For WebKit browsers (Chrome, Safari, Edge) */
+      ::-webkit-scrollbar {
+        width: 8px; /* Width of the scrollbar */
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1; /* Color of the track */
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background: orange; /* Color of the scrollbar thumb */
+        border-radius: 4px; /* Rounded corners */
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background: darkorange; /* Color of the scrollbar thumb on hover */
+      }
+      /* Additional animations for page load */
+    </style>
+  </head>
+
+  <body>
+    <!-- Loader -->
+    <!-- Loader -->
+    <div class="loader" id="loader">
+      <div class="background"></div>
+      <div class="floating-shapes">
+        <div class="shape circle shape-1"></div>
+        <div class="shape square shape-2"></div>
+        <div class="shape triangle shape-3"></div>
+        <div class="shape star shape-4"></div>
+        <div class="shape circle shape-5"></div>
+        <div class="shape square shape-6"></div>
+        <div class="shape triangle shape-7"></div>
+        <div class="shape star shape-8"></div>
+        <div class="shape circle shape-9"></div>
+        <div class="shape square shape-10"></div>
+        <div class="shape triangle shape-11"></div>
+        <div class="shape star shape-12"></div>
+        <div class="shape circle shape-13"></div>
+        <div class="shape square shape-14"></div>
+        <div class="shape triangle shape-15"></div>
+        <div class="shape star shape- 16"></div>
+        <div class="shape circle shape-17"></div>
+        <!-- <div class="shape square shape-18"></div> -->
+      </div>
+
+      <div class="loader-content">
+        <div class="loader-text">Loading...</div>
+      </div>
+    </div>
+    <div class="floating-shapes">
+      <!-- Placeholder for shapes -->
+    </div>
+    <script>
+      // Wait for the DOM to be fully loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        // Get the loader element
+        const loader = document.getElementById("loader");
+
+        // Set a timeout to hide the loader after 3 seconds (3000 milliseconds)
+        setTimeout(function () {
+          loader.style.display = "none"; // Hide the loader
+        }, 2000); // 3 seconds
+      });
+    </script>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container">
+        <!-- <a class="navbar-brand" href="#">RK FUTURE SCHOOL</a> -->
+        <a href="#RK">
+          <img
+            style="width: 80px"
+            src="{% static 'homepage/images/image.png' %}"
+            alt=""
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#programs">Programs</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#faculty">Faculty</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container text-center">
+        <h1 class="hero-title">Welcome to RK FUTURE School</h1>
+        <p class="hero-text mx-auto">
+          Empowering minds, shaping futures - Join our innovative community
+          where traditional values meet modern education to prepare students for
+          the challenges of tomorrow.
+        </p>
+        <div class="d-flex justify-content-center gap-3">
+          <button href="#" class="btn hero-btn">Discover More</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="container">
+      <!-- Feature Boxes -->
+      <div class="row mb-5">
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <i class="fas fa-graduation-cap"></i>
+            </div>
+            <h3 class="feature-title">Excellence in Education</h3>
+            <p>
+              Our programs are designed to bring out the best in every student
+              through personalized learning paths and innovative teaching
+              methodologies.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <i class="fas fa-users"></i>
+            </div>
+            <h3 class="feature-title">Supportive Community</h3>
+            <p>
+              Join a vibrant community where students, teachers, and parents
+              work together to create a nurturing environment for growth and
+              success.
+            </p>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="feature-box">
+            <div class="feature-icon">
+              <i class="fas fa-book-open"></i>
+            </div>
+            <h3 class="feature-title">Modern Curriculum</h3>
+            <p>
+              Our curriculum integrates traditional knowledge with modern skills
+              needed for future success in a rapidly changing global landscape.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- About Section -->
+      <section id="about" class="about-section">
+        <div class="row align-items-center">
+          <div class="col-lg-6 mb-4 mb-lg-0">
+            <div class="about-img">
+              <img
+                src="{% static 'homepage/images/image.jpg' %}"
+                alt="School Campus"
+                class="img-fluid"
+              />
+            </div>
+          </div>
+          <div class="col-lg-6">
+            <h2 class="section-title">About Our School</h2>
+            <p class="about-text">
+              RK FUTURE School was established in 2010 with a vision to provide
+              quality education that prepares students for the challenges of the
+              future while instilling strong values and a sense of social
+              responsibility.
+            </p>
+            <p class="about-text">
+              Our educational philosophy centers around holistic development,
+              combining academic excellence with character building, creativity,
+              critical thinking, and technological proficiency to create
+              well-rounded individuals.
+            </p>
+            <a href="#programs" class="btn hero-btn">Our Programs</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- Programs Section -->
+      <section id="programs" class="programs-section">
+        <h2 class="section-title text-center mb-5">Our Programs</h2>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="program-card">
+              <div class="program-header">
+                <h3 class="program-title">Primary Education</h3>
+              </div>
+              <div class="program-body">
+                <p>
+                  Foundation years focused on building fundamental skills,
+                  creativity, and a love for learning through activity-based
+                  curriculum.
+                </p>
+                <a href="#" class="btn btn-outline-light">Learn More</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="program-card">
+              <div class="program-header">
+                <h3 class="program-title">Secondary Education</h3>
+              </div>
+              <div class="program-body">
+                <p>
+                  Comprehensive program that balances academic rigor with
+                  extracurricular activities to develop well-rounded
+                  individuals.
+                </p>
+                <a href="#" class="btn btn-outline-light">Learn More</a>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="program-card">
+              <div class="program-header">
+                <h3 class="program-title">Special Programs</h3>
+              </div>
+              <div class="program-body">
+                <p>
+                  Advanced courses in STEM, arts, and leadership development to
+                  nurture specialized talents and interests.
+                </p>
+                <a href="#" class="btn btn-outline-light">Learn More</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Faculty Section -->
+      <section id="faculty" class="faculty-section">
+        <h2 class="section-title text-center mb-5">Our Faculty</h2>
+        <div class="row">
+          <div class="col-lg-4 col-md-6">
+            <div class="faculty-card">
+              <img
+                src="{% static 'homepage/images/image2.png' %}"
+                alt="Faculty Member"
+                class="faculty-img"
+              />
+              <div class="faculty-content">
+                <h4 class="faculty-name">RK</h4>
+                <p class="faculty-position">Principal</p>
+                <p>
+                  Ph.D. in Education with 15+ years of experience in educational
+                  leadership and curriculum development.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="faculty-card">
+              <img
+                src="{% static 'homepage/images/image3.png' %}"
+                alt="Faculty Member"
+                class="faculty-img"
+              />
+              <div class="faculty-content">
+                <h4 class="faculty-name">Prof. Rupok Koiry</h4>
+                <p class="faculty-position">Head of Sciences</p>
+                <p>
+                  Expert in physics and chemistry with a passion for hands-on
+                  experiments and real-world applications of science.
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="col-lg-4 col-md-6">
+            <div class="faculty-card">
+              <img
+                src="{% static 'homepage/images/image4.png' %}"
+                alt="Faculty Member"
+                class="faculty-img"
+              />
+              <div class="faculty-content">
+                <h4 class="faculty-name">MR. Biplob</h4>
+                <p class="faculty-position">Arts Director</p>
+                <p>
+                  Accomplished artist and educator focused on developing
+                  creative expression and design thinking.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      <!-- FAQ Accordion -->
+
+      <section id="faq" class="my-5">
+        <div class="container">
+          <h2 class="section-title text-center mb-5">
+            Frequently Asked Questions
+          </h2>
+          <div class="accordion" id="faqAccordion" aria-label="FAQ Accordion">
+            <!-- FAQ Item 1 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeadingOne">
+                <button
+                  class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faqCollapseOne"
+                  aria-expanded="true"
+                  aria-controls="faqCollapseOne"
+                >
+                  <span class="me-2">📋</span> What is the admission process?
+                </button>
+              </h3>
+              <div
+                id="faqCollapseOne"
+                class="accordion-collapse collapse show"
+                aria-labelledby="faqHeadingOne"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  <p>Our admission process consists of the following steps:</p>
+                  <ol>
+                    <li>
+                      Complete the online application form available on our
+                      website.
+                    </li>
+                    <li>Pay the application fee of $50 (non-refundable).</li>
+                    <li>
+                      Submit required documents (birth certificate, previous
+                      academic records, recommendation letters).
+                    </li>
+                    <li>Schedule and attend the entrance assessment test.</li>
+                    <li>
+                      Participate in an interview with our admissions committee.
+                    </li>
+                  </ol>
+                  <p>
+                    Applications are processed within 2-3 weeks. For more
+                    details, please visit our
+                    <a href="/admissions">Admissions page</a> or contact our
+                    Admissions Office at
+                    <a href="mailto:admissions@school.edu"
+                      >admissions@school.edu</a
+                    >.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ Item 2 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeadingTwo">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faqCollapseTwo"
+                  aria-expanded="false"
+                  aria-controls="faqCollapseTwo"
+                >
+                  <span class="me-2">⏰</span> What are the school timings?
+                </button>
+              </h3>
+              <div
+                id="faqCollapseTwo"
+                class="accordion-collapse collapse"
+                aria-labelledby="faqHeadingTwo"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    Our standard school hours are from 8:00 AM to 3:00 PM,
+                    Monday through Friday. The day is structured as follows:
+                  </p>
+                  <ul>
+                    <li>7:30 AM - 8:00 AM: Campus opens for early drop-off.</li>
+                    <li>8:00 AM - 8:15 AM: Morning assembly.</li>
+                    <li>
+                      8:15 AM - 12:00 PM: Morning classes with short breaks.
+                    </li>
+                    <li>12:00 PM - 12:45 PM: Lunch break.</li>
+                    <li>12:45 PM - 3:00 PM: Afternoon classes.</li>
+                    <li>
+                      3:00 PM - 5:00 PM: After-school activities and clubs
+                      (optional).
+                    </li>
+                  </ul>
+                  <p>
+                    Please note that kindergarten has a half-day option with
+                    pickup at 12:30 PM. The school calendar with holidays and
+                    term dates is available on our
+                    <a href="/parent-portal">parent portal</a>.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ Item 3 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeadingThree">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faqCollapseThree"
+                  aria-expanded="false"
+                  aria-controls="faqCollapseThree"
+                >
+                  <span class="me-2">🚌</span> Does the school provide
+                  transportation?
+                </button>
+              </h3>
+              <div
+                id="faqCollapseThree"
+                class="accordion-collapse collapse"
+                aria-labelledby="faqHeadingThree"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    Yes, we offer safe and reliable transportation services
+                    covering most areas within a 15-mile radius of the school.
+                    Our fleet of buses is equipped with GPS tracking, seat
+                    belts, and air conditioning. Each bus has a trained
+                    attendant to ensure student safety.
+                  </p>
+                  <p>Transportation fees vary by distance:</p>
+                  <ul>
+                    <li>0-5 miles: $800 per year.</li>
+                    <li>5-10 miles: $1,000 per year.</li>
+                    <li>10-15 miles: $1,200 per year.</li>
+                  </ul>
+                  <p>
+                    For route information and to register for bus service,
+                    please contact our Transportation Office at
+                    <a href="tel:5551234567">(555) 123-4567</a> or email
+                    <a href="mailto:transport@school.edu"
+                      >transport@school.edu</a
+                    >.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ Item 4 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeadingFour">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faqCollapseFour"
+                  aria-expanded="false"
+                  aria-controls="faqCollapseFour"
+                >
+                  <span class="me-2">📚</span> What curriculum does the school
+                  follow?
+                </button>
+              </h3>
+              <div
+                id="faqCollapseFour"
+                class="accordion-collapse collapse"
+                aria-labelledby="faqHeadingFour"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    Our school follows an internationally recognized curriculum
+                    that combines elements of the International Baccalaureate
+                    (IB) program with national standards. Our approach focuses
+                    on:
+                  </p>
+                  <ul>
+                    <li>
+                      Inquiry-based learning that encourages critical thinking.
+                    </li>
+                    <li>
+                      Strong foundation in STEM subjects (Science, Technology,
+                      Engineering, Mathematics).
+                    </li>
+                    <li>Comprehensive arts and humanities program.</li>
+                    <li>
+                      Multilingual education with options for Spanish, French,
+                      and Mandarin.
+                    </li>
+                    <li>
+                      Character development and social-emotional learning.
+                    </li>
+                  </ul>
+                  <p>
+                    Students in grades 11-12 can choose between the IB Diploma
+                    Programme or Advanced Placement (AP) courses. Our curriculum
+                    is regularly reviewed and updated to meet global educational
+                    standards while preparing students for top universities
+                    worldwide.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- FAQ Item 5 -->
+            <div class="accordion-item">
+              <h3 class="accordion-header" id="faqHeadingFive">
+                <button
+                  class="accordion-button collapsed"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  data-bs-target="#faqCollapseFive"
+                  aria-expanded="false"
+                  aria-controls="faqCollapseFive"
+                >
+                  <span class="me-2">🎨</span> What extracurricular activities
+                  are available?
+                </button>
+              </h3>
+              <div
+                id="faqCollapseFive"
+                class="accordion-collapse collapse"
+                aria-labelledby="faqHeadingFive"
+                data-bs-parent="#faqAccordion"
+              >
+                <div class="accordion-body">
+                  <p>
+                    We offer a diverse range of extracurricular activities that
+                    help students develop their talents and interests beyond
+                    academics:
+                  </p>
+                  <p>
+                    <strong>Sports:</strong> Soccer, basketball, swimming,
+                    tennis, track and field, volleyball, and cricket.
+                  </p>
+                  <p>
+                    <strong>Arts:</strong> Orchestra, choir, band, drama club,
+                    visual arts, photography, and dance.
+                  </p>
+                  <p>
+                    <strong>Academic clubs:</strong> Debate, Model UN, robotics,
+                    coding, mathematics, science olympiad, and journalism.
+                  </p>
+                  <p>
+                    <strong>Service and leadership:</strong> Student council,
+                    community service club, environmental club, and peer
+                    tutoring.
+                  </p>
+                  <p>
+                    Most activities meet 1-2 times per week after school from
+                    3:15 PM to 4:45 PM. Some competitive teams may have
+                    additional practice sessions or weekend competitions.
+                    Activity fees vary by program, and financial assistance is
+                    available for eligible families.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Back to Top Button -->
+          <div class="text-center mt-4">
+            <a href="#faq" class="btn btn-primary btn-sm">
+              <span class="me-2">⬆️</span> Back to Top
+            </a>
+          </div>
+        </div>
+      </section>
+      <!-- Contact Section -->
+      <section id="contact" class="contact-section py-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <div class="section-header text-center mb-5">
+                <h2 class="section-title position-relative">Get In Touch</h2>
+                <p class="lead">
+                  Begin your journey with RK FUTURE School today
+                </p>
+              </div>
+
+              <!-- Success/Error Messages -->
+              {% if messages %} {% for message in messages %}
+              <div
+                class="alert alert-{{ message.tags }} alert-dismissible fade show"
+                role="alert"
+              >
+                {{ message }}
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="alert"
+                  aria-label="Close"
+                ></button>
+              </div>
+              {% endfor %} {% endif %}
+
+              <!-- Form Card -->
+              <div class="contact-card">
+                <div class="card-header text-center py-4">
+                  <h3 class="mb-0 card-title-glow">Student Registration</h3>
+                  <p class="mb-0">
+                    Complete this form to start your application process
+                  </p>
+                </div>
+                <div class="card-body p-4">
+                  <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+
+                    <!-- Personal Information -->
+                    <div class="form-section">
+                      <h5 class="form-section-title">
+                        <span class="section-icon"
+                          ><i class="fas fa-user"></i
+                        ></span>
+                        Personal Information
+                      </h5>
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="id_name" class="form-label"
+                            >Full Name</label
+                          >
+                          <div class="input-group input-glow">
+                            <span class="input-group-text"
+                              ><i class="fas fa-user-circle"></i
+                            ></span>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="id_name"
+                              name="name"
+                              placeholder="Enter your full name"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="id_dob" class="form-label"
+                            >Date of Birth</label
+                          >
+                          <div class="input-group input-glow">
+                            <span class="input-group-text"
+                              ><i class="fas fa-calendar-alt"></i
+                            ></span>
+                            <input
+                              type="date"
+                              class="form-control"
+                              id="id_dob"
+                              name="dob"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="id_email" class="form-label">Email</label>
+                          <div class="input-group input-glow">
+                            <span class="input-group-text"
+                              ><i class="fas fa-envelope"></i
+                            ></span>
+                            <input
+                              type="email"
+                              class="form-control"
+                              id="id_email"
+                              name="email"
+                              placeholder="Enter your email"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="id_phone" class="form-label"
+                            >Phone Number</label
+                          >
+                          <div class="input-group input-glow">
+                            <span class="input-group-text"
+                              ><i class="fas fa-phone"></i
+                            ></span>
+                            <input
+                              type="tel"
+                              class="form-control"
+                              id="id_phone"
+                              name="phone"
+                              placeholder="Enter phone number"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="id_address" class="form-label"
+                          >Address</label
+                        >
+                        <div class="input-group input-glow">
+                          <span class="input-group-text"
+                            ><i class="fas fa-home"></i
+                          ></span>
+                          <textarea
+                            class="form-control"
+                            id="id_address"
+                            name="address"
+                            rows="2"
+                            placeholder="Enter your address"
+                            required
+                          ></textarea>
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Academic Information -->
+                    <div class="form-section">
+                      <h5 class="form-section-title">
+                        <span class="section-icon"
+                          ><i class="fas fa-graduation-cap"></i
+                        ></span>
+                        Academic Information
+                      </h5>
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="id_roll" class="form-label"
+                            >Roll Number</label
+                          >
+                          <div class="input-group input-glow">
+                            <span class="input-group-text"
+                              ><i class="fas fa-id-card"></i
+                            ></span>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="id_roll"
+                              name="roll"
+                              placeholder="Enter roll number (if applicable)"
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="id_class_name" class="form-label"
+                            >Applying for Grade</label
+                          >
+                          <div class="input-group input-glow">
+                            <span class="input-group-text"
+                              ><i class="fas fa-chalkboard"></i
+                            ></span>
+                            <select
+                              class="form-control"
+                              id="id_class_name"
+                              name="class_name"
+                              required
+                            >
+                              <option value="">Select Grade</option>
+                              <option value="Grade 1">Grade 1</option>
+                              <option value="Grade 2">Grade 2</option>
+                              <option value="Grade 3">Grade 3</option>
+                              <option value="Grade 4">Grade 4</option>
+                              <option value="Grade 5">Grade 5</option>
+                              <option value="Grade 6">Grade 6</option>
+                              <option value="Grade 7">Grade 7</option>
+                              <option value="Grade 8">Grade 8</option>
+                              <option value="Grade 9">Grade 9</option>
+                              <option value="Grade 10">Grade 10</option>
+                              <option value="Grade 11">Grade 11</option>
+                              <option value="Grade 12">Grade 12</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="id_year" class="form-label"
+                            >Ssc Year</label
+                          >
+                          <div class="input-group input-glow">
+                            <span class="input-group-text"
+                              ><i class="fas fa-calendar-check"></i
+                            ></span>
+                            <input
+                              type="number"
+                              class="form-control"
+                              id="id_year"
+                              name="year"
+                              placeholder="Enter academic year (e.g., 2025)"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="id_previous_school" class="form-label"
+                            >Previous School</label
+                          >
+                          <div class="input-group input-glow">
+                            <span class="input-group-text"
+                              ><i class="fas fa-school"></i
+                            ></span>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="id_previous_school"
+                              name="previous_school"
+                              placeholder="Enter previous school name"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="id_documents" class="form-label"
+                          >Upload Documents</label
+                        >
+                        <div class="input-group input-glow">
+                          <span class="input-group-text"
+                            ><i class="fas fa-file-upload"></i
+                          ></span>
+                          <input
+                            type="file"
+                            class="form-control"
+                            id="id_documents"
+                            name="documents"
+                            multiple
+                          />
+                        </div>
+                        <div class="form-text">
+                          Upload birth certificate, previous academic records,
+                          etc.
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Parent/Guardian Information -->
+                    <div class="form-section">
+                      <h5 class="form-section-title">
+                        <span class="section-icon"
+                          ><i class="fas fa-users"></i
+                        ></span>
+                        Parent/Guardian Information
+                      </h5>
+                      <div class="row">
+                        <div class="col-md-6 mb-3">
+                          <label for="id_parent_name" class="form-label"
+                            >Parent/Guardian Name</label
+                          >
+                          <div class="input-group input-glow">
+                            <span class="input-group-text"
+                              ><i class="fas fa-user-friends"></i
+                            ></span>
+                            <input
+                              type="text"
+                              class="form-control"
+                              id="id_parent_name"
+                              name="parent_name"
+                              placeholder="Enter name"
+                              required
+                            />
+                          </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                          <label for="id_parent_phone" class="form-label"
+                            >Parent/Guardian Phone</label
+                          >
+                          <div class="input-group input-glow">
+                            <span class="input-group-text"
+                              ><i class="fas fa-phone-alt"></i
+                            ></span>
+                            <input
+                              type="tel"
+                              class="form-control"
+                              id="id_parent_phone"
+                              name="parent_phone"
+                              placeholder="Enter phone number"
+                              required
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div class="mb-3">
+                        <label for="id_parent_email" class="form-label"
+                          >Parent/Guardian Email</label
+                        >
+                        <div class="input-group input-glow">
+                          <span class="input-group-text"
+                            ><i class="fas fa-envelope-open"></i
+                          ></span>
+                          <input
+                            type="email"
+                            class="form-control"
+                            id="id_parent_email"
+                            name="parent_email"
+                            placeholder="Enter email"
+                            required
+                          />
+                        </div>
+                      </div>
+                    </div>
+
+                    <!-- Agreements -->
+                    <div class="mb-4 form-check-glow">
+                      <input
+                        type="checkbox"
+                        class="form-check-input"
+                        id="id_terms"
+                        name="terms"
+                        required
+                      />
+                      <label class="form-check-label" for="id_terms"
+                        >I agree to the terms and conditions</label
+                      >
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="d-grid mt-4">
+                      <button type="submit" class="btn submit-btn btn-lg">
+                        <span class="btn-text">Submit Application</span>
+                        <i class="fas fa-arrow-right ms-2"></i>
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-4 mb-4">
+            <h4 class="footer-title">RK FUTURE School</h4>
+            <p>
+              Empowering minds, shaping futures since 2010. Our commitment to
+              excellence in education continues to produce leaders of tomorrow.
+            </p>
+          </div>
+          <div class="col-lg-4 mb-4">
+            <h4 class="footer-title">Quick Links</h4>
+            <ul class="list-unstyled">
+              <li class="mb-2">
+                <a href="#" class="text-decoration-none text-light">Home</a>
+              </li>
+              <li class="mb-2">
+                <a href="#about" class="text-decoration-none text-light"
+                  >About Us</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#programs" class="text-decoration-none text-light"
+                  >Programs</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#faculty" class="text-decoration-none text-light"
+                  >Faculty</a
+                >
+              </li>
+              <li class="mb-2">
+                <a href="#contact" class="text-decoration-none text-light"
+                  >Contact</a
+                >
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-4 mb-4">
+            <h4 class="footer-title">Follow Us</h4>
+            <div class="d-flex">
+              <a href="#" class="text-light me-3"
+                ><i class="fab fa-facebook-f"></i
+              ></a>
+              <a href="#" class="text-light me-3"
+                ><i class="fab fa-twitter"></i
+              ></a>
+              <a href="#" class="text-light me-3"
+                ><i class="fab fa-instagram"></i
+              ></a>
+              <a href="#" class="text-light me-3"
+                ><i class="fab fa-linkedin-in"></i
+              ></a>
+            </div>
+            <p class="mt-3">Subscribe to our newsletter for updates</p>
+            <div class="input-group">
+              <input
+                type="email"
+                class="form-control bg-dark border-dark text-light"
+                placeholder="Your Email"
+              />
+              <button class="btn btn-success" type="button">Subscribe</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="copyright text-center">
+          <p>&copy; 2025 RK FUTURE School. All Rights Reserved.</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  </body>
+</html>

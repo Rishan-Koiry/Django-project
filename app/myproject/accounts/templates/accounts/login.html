@@ -1,0 +1,479 @@
+<!-- templates/accounts/login.html -->
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+  <head>
+    <link rel="icon" href="{% static 'accounts/images/download.png' %}" />
+
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login | YourApp</title>
+    <!-- Bootstrap CSS -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome for icons -->
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --primary-color: #6a11cb;
+        --secondary-color: #2575fc;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(
+          135deg,
+          var(--primary-color) 0%,
+          var(--secondary-color) 100%
+        );
+        min-height: 100vh;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .navbar {
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .navbar-brand img {
+        height: 40px;
+      }
+
+      .nav-link {
+        color: var(--primary-color);
+        font-weight: 500;
+        transition: all 0.3s;
+        margin: 0 10px;
+      }
+
+      .nav-link:hover {
+        color: var(--secondary-color);
+        transform: translateY(-2px);
+      }
+
+      .main-content {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 2rem 0;
+      }
+
+      .login-container {
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 15px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        overflow: hidden;
+        width: 900px;
+        display: flex;
+        max-width: 90%;
+      }
+
+      .login-image {
+        background-image: url('{% static "accounts/images/login-bg.jpg" %}');
+        background-size: cover;
+        background-position: center;
+        width: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+      }
+
+      .login-image::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(37, 117, 252, 0.5);
+      }
+
+      .login-form {
+        width: 50%;
+        padding: 40px;
+      }
+
+      .logo {
+        text-align: center;
+        margin-bottom: 20px;
+      }
+
+      .logo img {
+        height: 50px;
+      }
+
+      h2 {
+        color: #333;
+        margin-bottom: 25px;
+        text-align: center;
+        font-weight: 600;
+      }
+
+      .form-floating {
+        margin-bottom: 20px;
+      }
+
+      .form-control:focus {
+        border-color: var(--primary-color);
+        box-shadow: 0 0 0 0.25rem rgba(106, 17, 203, 0.25);
+      }
+
+      .btn-login {
+        background: linear-gradient(
+          to right,
+          var(--primary-color),
+          var(--secondary-color)
+        );
+        border: none;
+        color: white;
+        font-weight: 500;
+        padding: 12px;
+        border-radius: 8px;
+        width: 100%;
+        margin-top: 15px;
+        transition: all 0.3s;
+      }
+
+      .btn-login:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 5px 15px rgba(106, 17, 203, 0.3);
+      }
+
+      .login-footer {
+        text-align: center;
+        margin-top: 30px;
+        color: #666;
+      }
+
+      .login-footer a {
+        color: var(--primary-color);
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s;
+      }
+
+      .login-footer a:hover {
+        color: var(--secondary-color);
+        text-decoration: underline;
+      }
+
+      .alert {
+        margin-bottom: 20px;
+        border-radius: 8px;
+      }
+
+      .or-divider {
+        display: flex;
+        align-items: center;
+        margin: 25px 0;
+        color: #666;
+      }
+
+      .or-divider::before,
+      .or-divider::after {
+        content: "";
+        flex: 1;
+        border-bottom: 1px solid #ddd;
+      }
+
+      .or-divider::before {
+        margin-right: 10px;
+      }
+
+      .or-divider::after {
+        margin-left: 10px;
+      }
+
+      .social-login {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 25px;
+      }
+
+      .social-btn {
+        padding: 10px 15px;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        text-decoration: none;
+        transition: all 0.3s;
+        width: 50px;
+        height: 50px;
+      }
+
+      .social-btn:hover {
+        transform: translateY(-3px);
+      }
+
+      .google-btn {
+        background-color: #db4437;
+      }
+
+      .facebook-btn {
+        background-color: #4267b2;
+      }
+
+      .twitter-btn {
+        background-color: #1da1f2;
+      }
+
+      /* Responsive design */
+      @media (max-width: 768px) {
+        .login-container {
+          flex-direction: column;
+        }
+
+        .login-image,
+        .login-form {
+          width: 100%;
+        }
+
+        .login-image {
+          height: 200px;
+        }
+      }
+      <!-- Add this CSS to your style section -- > .password-toggle {
+        position: absolute;
+        right: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #6a11cb;
+        z-index: 5;
+      }
+
+      .password-container {
+        position: relative;
+      }
+
+      .password-container .form-control {
+        padding-right: 40px; /* Make space for the eye icon */
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <div class="container">
+        <a class="navbar-brand" href="{% url 'home' %}">
+          <img
+            src="{% static 'accounts/images/download.png' %}"
+            alt="YourApp Logo"
+            onerror="this.src='https://via.placeholder.com/150x50?text=YourApp'; this.onerror=null;"
+          />
+        </a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'home' %}">
+                <i class="fas fa-home me-1"></i> Home
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" href="{% url 'login' %}">
+                <i class="fas fa-sign-in-alt me-1"></i> Login
+              </a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="{% url 'register' %}">
+                <i class="fas fa-user-plus me-1"></i> Register
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+      <div class="login-container">
+        <div class="login-image">
+          <!-- You can add a logo or welcome message here -->
+          <div class="position-relative text-white text-center px-4">
+            <h1 class="fw-bold">Welcome Back!</h1>
+            <p class="lead">We're glad to see you again.</p>
+          </div>
+        </div>
+        <div class="login-form">
+          <div class="logo">
+            <!-- Replace with your actual logo -->
+            <a href="{% url 'home' %}">
+              <img
+                src="{% static 'accounts/images/download.png' %}"
+                alt="YourApp Logo"
+                onerror="this.src='https://via.placeholder.com/150x50?text=YourApp'; this.onerror=null;"
+              />
+            </a>
+          </div>
+
+          <h2>Sign In</h2>
+
+          {% if messages %} {% for message in messages %}
+          <div
+            class="alert alert-{% if message.tags == 'error' %}danger{% else %}{{ message.tags }}{% endif %} alert-dismissible fade show"
+            role="alert"
+          >
+            {{ message }}
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+          {% endfor %} {% endif %}
+
+          <!-- Modify your form section to include the password toggle -->
+          <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %} {% for field in form %}
+            <div class="form-floating mb-3">
+              {% if field.name == 'password' %}
+              <div class="password-container">
+                {{ field }}
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                <i
+                  class="fas fa-eye password-toggle"
+                  id="togglePassword"
+                  title="Show/Hide Password"
+                ></i>
+              </div>
+
+              {% else %}
+              <div class="form-floating">
+                {{ field }}
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+              </div>
+              {% endif %} {% if field.errors %}
+              <div class="invalid-feedback d-block">{{ field.errors }}</div>
+              {% endif %}
+            </div>
+            {% endfor %}
+            <!-- Rest of your form remains the same -->
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+              <div class="form-check">
+                <input
+                  class="form-check-input"
+                  type="checkbox"
+                  id="rememberMe"
+                />
+                <label class="form-check-label" for="rememberMe"
+                  >Remember me</label
+                >
+              </div>
+              <!-- Forgot password link commented out until you add this view -->
+              <!-- <a href="#" class="text-decoration-none">Forgot password?</a> -->
+            </div>
+
+            <button type="submit" class="btn btn-login">Sign In</button>
+          </form>
+
+          <div class="or-divider">or</div>
+
+          <div class="social-login">
+            <a href="#" class="social-btn google-btn">
+              <i class="fab fa-google"></i>
+            </a>
+            <a href="#" class="social-btn facebook-btn">
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-btn twitter-btn">
+              <i class="fab fa-twitter"></i>
+            </a>
+          </div>
+
+          <div class="login-footer">
+            <p>
+              Don't have an account? <a href="{% url 'register' %}">Sign Up</a>
+            </p>
+            <p class="mt-3 small text-muted">
+              &copy; {% now "Y" %} YourApp. All rights reserved.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+      // Fix for Django form fields to work with Bootstrap floating labels
+      document.addEventListener("DOMContentLoaded", function () {
+        const formControls = document.querySelectorAll(
+          'input[type="text"], input[type="email"], input[type="password"]'
+        );
+        formControls.forEach((input) => {
+          input.classList.add("form-control");
+
+          // Add 'filled' class if the input has a value
+          if (input.value) {
+            input.classList.add("filled");
+          }
+        });
+
+        // Form validation
+        const forms = document.querySelectorAll(".needs-validation");
+        Array.from(forms).forEach((form) => {
+          form.addEventListener(
+            "submit",
+            (event) => {
+              if (!form.checkValidity()) {
+                event.preventDefault();
+                event.stopPropagation();
+              }
+              form.classList.add("was-validated");
+            },
+            false
+          );
+        });
+      });
+    </script>
+    <script>
+      <!-- Add this JavaScript at the bottom of your script section -->
+      // Password toggle functionality
+      const togglePassword = document.querySelector("#togglePassword");
+      if (togglePassword) {
+        const password = document.querySelector("#id_password");
+
+        togglePassword.addEventListener("click", function (e) {
+          // toggle the type attribute
+          const type =
+            password.getAttribute("type") === "password" ? "text" : "password";
+          password.setAttribute("type", type);
+          // toggle the eye icon
+          this.classList.toggle("fa-eye");
+          this.classList.toggle("fa-eye-slash");
+        });
+      }
+
+      // Also modify your existing formControls selector to exclude password fields from the initial processing
+      const formControls = document.querySelectorAll(
+        'input[type="text"], input[type="email"]'
+      );
+    </script>
+  </body>
+</html>

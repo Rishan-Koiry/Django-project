@@ -1,0 +1,712 @@
+{% extends 'users/base.html' %} {% block content %}
+<style>
+  /* Base animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideDown {
+    from {
+      transform: translateY(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideUp {
+    from {
+      transform: translateY(30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes slideRight {
+    from {
+      transform: translateX(-30px);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+
+  @keyframes scaleIn {
+    from {
+      transform: scale(0.95);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  @keyframes pulse {
+    0% {
+      transform: scale(1);
+      background-color: rgba(231, 76, 60, 0.1);
+    }
+    50% {
+      transform: scale(1.02);
+      background-color: rgba(231, 76, 60, 0.2);
+    }
+    100% {
+      transform: scale(1);
+      background-color: rgba(231, 76, 60, 0.1);
+    }
+  }
+
+  @keyframes buttonHover {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-3px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes shimmer {
+    0% {
+      background-position: -200% 0;
+    }
+    100% {
+      background-position: 200% 0;
+    }
+  }
+
+  /* Animation classes */
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+  }
+
+  .animate-slide-down {
+    animation: slideDown 0.6s ease-out forwards;
+  }
+
+  .animate-slide-up {
+    animation: slideUp 0.6s ease-out forwards;
+  }
+
+  .animate-slide-right {
+    animation: slideRight 0.6s ease-out forwards;
+  }
+
+  .animate-scale-in {
+    animation: scaleIn 0.6s ease-out forwards;
+  }
+
+  .animate-pulse {
+    animation: pulse 2s infinite;
+  }
+
+  /* Form styling */
+  .form-container {
+    max-width: 450px;
+    margin: 3rem auto;
+    padding: 0 1rem;
+  }
+
+  .form-title {
+    color: #2c3e50;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-size: 2.2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+  }
+
+  .form-card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.05);
+    padding: 2.5rem;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+  }
+
+  .form-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.15), 0 2px 4px rgba(0, 0, 0, 0.08);
+  }
+
+  .login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+  }
+
+  .form-group label {
+    font-weight: 600;
+    margin-bottom: 0.7rem;
+    color: #2c3e50;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    letter-spacing: 0.2px;
+  }
+
+  .form-group label i {
+    margin-right: 0.5rem;
+    color: #3498db;
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="password"] {
+    padding: 1rem 1.2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05) inset;
+  }
+
+  .form-group input[type="text"]:focus,
+  .form-group input[type="password"]:focus {
+    border-color: #3498db;
+    box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+    outline: none;
+  }
+
+  .form-group input[type="text"]::placeholder,
+  .form-group input[type="password"]::placeholder {
+    color: #bdc3c7;
+  }
+
+  .form-error {
+    color: #e74c3c;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+    padding: 0.5rem 0.8rem;
+    border-radius: 6px;
+    background-color: rgba(231, 76, 60, 0.1);
+    display: flex;
+    align-items: center;
+  }
+
+  .form-error i {
+    margin-right: 0.5rem;
+  }
+
+  .form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 0.5rem;
+    font-size: 0.9rem;
+  }
+
+  .remember-me {
+    display: flex;
+    align-items: center;
+  }
+
+  .remember-me input[type="checkbox"] {
+    margin-right: 0.5rem;
+    cursor: pointer;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 1px solid #dcdfe6;
+    border-radius: 4px;
+    position: relative;
+    transition: all 0.3s;
+  }
+
+  .remember-me input[type="checkbox"]:checked {
+    background-color: #3498db;
+    border-color: #3498db;
+  }
+
+  .remember-me input[type="checkbox"]:checked::after {
+    content: "\f00c";
+    font-family: "Font Awesome 5 Free";
+    font-weight: 900;
+    color: white;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 0.7rem;
+  }
+
+  .remember-me label {
+    color: #6c757d;
+    cursor: pointer;
+  }
+
+  .forgot-password {
+    font-size: 0.9rem;
+  }
+
+  .btn {
+    display: inline-block;
+    font-weight: 600;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    padding: 1rem 1.5rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    border-radius: 8px;
+    transition: all 0.3s;
+    margin-top: 0.5rem;
+    letter-spacing: 0.3px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    color: #fff;
+    background-color: #3498db;
+    border: none;
+    width: 100%;
+    box-shadow: 0 4px 6px rgba(52, 152, 219, 0.25);
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .btn-primary:hover {
+    background-color: #2980b9;
+    box-shadow: 0 6px 8px rgba(52, 152, 219, 0.3);
+    transform: translateY(-2px);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 4px rgba(52, 152, 219, 0.2);
+  }
+
+  .btn-animated {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+  }
+
+  .btn-animated:hover {
+    animation: buttonHover 1s infinite;
+  }
+
+  .btn-animated:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
+    transition: all 0.6s;
+    z-index: -1;
+  }
+
+  .btn-animated:hover:before {
+    left: 100%;
+  }
+
+  .form-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    color: #6c757d;
+  }
+
+  .text-link {
+    color: #3498db;
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s;
+  }
+
+  .text-link:hover {
+    color: #2980b9;
+    text-decoration: underline;
+  }
+
+  /* Social login section */
+  .social-login {
+    margin-top: 2rem;
+  }
+
+  .divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1rem 0;
+  }
+
+  .divider::before,
+  .divider::after {
+    content: "";
+    flex: 1;
+    border-bottom: 1px solid #e0e0e0;
+  }
+
+  .divider span {
+    padding: 0 1rem;
+    color: #6c757d;
+    font-size: 0.9rem;
+  }
+
+  .social-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .btn-social {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border: 1px solid #e0e0e0;
+    background-color: white;
+    color: #333;
+    transition: all 0.3s;
+    font-weight: 500;
+  }
+
+  .btn-social i {
+    margin-right: 0.5rem;
+    font-size: 1.1rem;
+  }
+
+  .btn-google:hover {
+    background-color: #db4437;
+    color: white;
+    border-color: #db4437;
+    box-shadow: 0 4px 8px rgba(219, 68, 55, 0.2);
+    transform: translateY(-2px);
+  }
+
+  .btn-facebook:hover {
+    background-color: #4267b2;
+    color: white;
+    border-color: #4267b2;
+    box-shadow: 0 4px 8px rgba(66, 103, 178, 0.2);
+    transform: translateY(-2px);
+  }
+
+  /* Authentication feedback */
+  .auth-feedback {
+    margin: 1rem 0;
+  }
+
+  .auth-error {
+    display: flex;
+    align-items: center;
+    color: #e74c3c;
+    font-size: 0.9rem;
+    padding: 0.7rem 1rem;
+    border-radius: 6px;
+    background-color: rgba(231, 76, 60, 0.1);
+    border: 1px solid rgba(231, 76, 60, 0.2);
+  }
+
+  .auth-error i {
+    margin-right: 0.5rem;
+    font-size: 1rem;
+  }
+
+  .messages-container {
+    margin-bottom: 1.5rem;
+  }
+
+  .alert {
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+  }
+
+  .alert-error,
+  .alert-danger {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #e74c3c;
+    border: 1px solid rgba(231, 76, 60, 0.2);
+  }
+
+  .alert-success {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: #2ecc71;
+    border: 1px solid rgba(46, 204, 113, 0.2);
+  }
+
+  .alert-info {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: #3498db;
+    border: 1px solid rgba(52, 152, 219, 0.2);
+  }
+
+  .alert-warning {
+    background-color: rgba(241, 196, 15, 0.1);
+    color: #f39c12;
+    border: 1px solid rgba(241, 196, 15, 0.2);
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 576px) {
+    .form-title {
+      font-size: 1.8rem;
+    }
+
+    .form-card {
+      padding: 1.5rem;
+    }
+
+    .form-options {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.8rem;
+    }
+
+    .social-buttons {
+      flex-direction: column;
+    }
+  }
+</style>
+
+<style>
+  @keyframes shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    10%,
+    30%,
+    50%,
+    70%,
+    90% {
+      transform: translateX(-5px);
+    }
+    20%,
+    40%,
+    60%,
+    80% {
+      transform: translateX(5px);
+    }
+  }
+
+  .shake-animation {
+    animation: shake 0.8s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+  }
+
+  .input-error {
+    border-color: #e74c3c !important;
+    background-color: rgba(231, 76, 60, 0.03);
+  }
+</style>
+<div class="form-container animate-fade-in">
+  <h1 class="form-title animate-slide-down">Welcome Back</h1>
+
+  {% if messages %}
+  <div class="messages-container animate-slide-down">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }}">{{ message }}</div>
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <div class="form-card animate-scale-in">
+    <form method="POST" class="login-form" id="loginForm" novalidate>
+      {% csrf_token %}
+
+      <div class="form-group animate-slide-right" style="animation-delay: 0.1s">
+        <label for="{{ form.username.id_for_label }}">
+          <i class="fas fa-user"></i> Username
+        </label>
+        {{ form.username }}
+        <div
+          class="form-error animate-pulse"
+          id="username-error"
+          style="display: none"
+        >
+          Username is required
+        </div>
+        {% if form.username.errors %}
+        <div class="form-error animate-pulse">{{ form.username.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-group animate-slide-right" style="animation-delay: 0.2s">
+        <label for="{{ form.password.id_for_label }}">
+          <i class="fas fa-lock"></i> Password
+        </label>
+        {{ form.password }}
+        <div
+          class="form-error animate-pulse"
+          id="password-error"
+          style="display: none"
+        >
+          Password is required
+        </div>
+        {% if form.password.errors %}
+        <div class="form-error animate-pulse">{{ form.password.errors }}</div>
+        {% endif %}
+      </div>
+
+      <div class="form-options animate-fade-in" style="animation-delay: 0.3s">
+        <div class="remember-me">
+          <input type="checkbox" id="remember-me" name="remember" />
+          <label for="remember-me">Remember me</label>
+        </div>
+      </div>
+
+      <div class="auth-feedback" id="auth-feedback" style="display: none">
+        <div class="auth-error animate-pulse">
+          <i class="fas fa-exclamation-circle"></i>
+          <span id="auth-message"></span>
+        </div>
+      </div>
+
+      <button
+        type="submit"
+        class="btn btn-primary btn-animated animate-fade-in"
+        style="animation-delay: 0.4s"
+        id="login-button"
+      >
+        <span>Login</span>
+        <i class="fas fa-sign-in-alt" style="margin-left: 5px"></i>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Focus username field on load
+    const usernameField = document.getElementById(
+      "{{ form.username.id_for_label }}"
+    );
+    if (usernameField) {
+      usernameField.focus();
+    }
+
+    // Add shake animation to form on invalid submission
+    const loginForm = document.querySelector(".login-form");
+    const formErrors = document.querySelectorAll(
+      ".form-error:not(#username-error):not(#password-error)"
+    );
+
+    if (formErrors.length > 0 && loginForm) {
+      loginForm.classList.add("shake-animation");
+      setTimeout(() => {
+        loginForm.classList.remove("shake-animation");
+      }, 1000);
+    }
+
+    // Frontend validation
+    const form = document.getElementById("loginForm");
+    const usernameError = document.getElementById("username-error");
+    const passwordError = document.getElementById("password-error");
+    const authFeedback = document.getElementById("auth-feedback");
+    const authMessage = document.getElementById("auth-message");
+    const loginButton = document.getElementById("login-button");
+
+    form.addEventListener("submit", function (event) {
+      let isValid = true;
+      const username = document.getElementById(
+        "{{ form.username.id_for_label }}"
+      ).value;
+      const password = document.getElementById(
+        "{{ form.password.id_for_label }}"
+      ).value;
+
+      // Reset errors
+      usernameError.style.display = "none";
+      passwordError.style.display = "none";
+      authFeedback.style.display = "none";
+
+      // Validate username
+      if (!username.trim()) {
+        usernameError.style.display = "block";
+        isValid = false;
+      }
+
+      // Validate password
+      if (!password.trim()) {
+        passwordError.style.display = "block";
+        isValid = false;
+      }
+
+      if (!isValid) {
+        event.preventDefault();
+        loginForm.classList.add("shake-animation");
+        setTimeout(() => {
+          loginForm.classList.remove("shake-animation");
+        }, 1000);
+        return;
+      }
+
+      // If client-side validation passes, we can submit the form to the server
+      // Add loading state to button
+      loginButton.innerHTML =
+        '<span>Logging in...</span><i class="fas fa-spinner fa-spin" style="margin-left: 5px;"></i>';
+      loginButton.disabled = true;
+
+      // For demonstration purposes, we'll simulate an authentication check
+      // In a real implementation, this would be handled by your backend
+      // This is just to show what the error messaging would look like
+
+      // Uncomment the following code to simulate authentication failure
+      /* 
+      event.preventDefault();
+      setTimeout(() => {
+        authFeedback.style.display = "block";
+        authMessage.textContent = "Username or password is incorrect. Please try again.";
+        loginButton.innerHTML = '<span>Login</span><i class="fas fa-sign-in-alt" style="margin-left: 5px;"></i>';
+        loginButton.disabled = false;
+        loginForm.classList.add("shake-animation");
+        setTimeout(() => {
+          loginForm.classList.remove("shake-animation");
+        }, 1000);
+      }, 1500);
+      */
+    });
+
+    // Add error classes to form fields if they contain errors
+    const formFieldsWithErrors = document.querySelectorAll(
+      ".form-group:has(.form-error:not([style*='display: none']))"
+    );
+    formFieldsWithErrors.forEach((field) => {
+      const input = field.querySelector("input");
+      if (input) {
+        input.classList.add("input-error");
+      }
+    });
+  });
+</script>
+
+{% endblock %}
