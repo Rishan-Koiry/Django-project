@@ -1,0 +1,1787 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% load static %}
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Khana Khazana - Authentic Indian Cuisine</title>
+
+    <style>
+      /* Reset and Base Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+      }
+
+      body {
+        background-color: #f9f5f0;
+        color: #333;
+        scroll-behavior: smooth;
+      }
+
+      /* Header Styles */
+      header {
+        background-color: #fff;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        position: sticky;
+        top: 0;
+        z-index: 100;
+      }
+
+      .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .logo {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #e67e22;
+        font-family: "Brush Script MT", cursive;
+        text-decoration: none;
+      }
+
+      .logo span {
+        color: #333;
+      }
+
+      .nav-links {
+        display: flex;
+        list-style: none;
+      }
+
+      .nav-links li {
+        margin-left: 2rem;
+      }
+
+      .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s;
+        position: relative;
+      }
+
+      .nav-links a:hover {
+        color: #e67e22;
+      }
+
+      .nav-links a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: #e67e22;
+        transition: width 0.3s;
+      }
+
+      .nav-links a:hover::after {
+        width: 100%;
+      }
+
+      .nav-right {
+        display: flex;
+        align-items: center;
+      }
+
+      .search-bar {
+        margin-right: 1.5rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid #ddd;
+        border-radius: 25px;
+        outline: none;
+        transition: all 0.3s;
+      }
+
+      .search-bar:focus {
+        border-color: #e67e22;
+        box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.2);
+      }
+
+      .nav-icon {
+        margin-left: 1.5rem;
+        font-size: 1.2rem;
+        color: #555;
+        cursor: pointer;
+        transition: color 0.3s;
+        position: relative;
+      }
+
+      .nav-icon:hover {
+        color: #e67e22;
+      }
+
+      .cart-icon {
+        position: relative;
+      }
+
+      .cart-count {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        background-color: #e67e22;
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.7rem;
+      }
+
+      /* Hero Section Styles */
+      .hero {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 2rem 5%;
+        max-width: 1400px;
+        margin: 2rem auto;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .hero-content {
+        flex: 1;
+        padding-right: 2rem;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-title {
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
+        color: #333;
+      }
+
+      .hero-subtitle {
+        font-size: 3rem;
+        color: #e67e22;
+        margin-bottom: 1rem;
+        font-weight: 700;
+      }
+
+      .hero-text {
+        font-size: 1.1rem;
+        color: #777;
+        margin-bottom: 2rem;
+      }
+
+      .hero-img {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        position: relative;
+        z-index: 2;
+      }
+
+      .hero-img img {
+        width: 90%;
+        max-width: 500px;
+        border-radius: 50%;
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Buttons */
+      .btn {
+        display: inline-block;
+        padding: 0.8rem 2rem;
+        background-color: #e67e22;
+        color: white;
+        border: none;
+        border-radius: 25px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s;
+        text-decoration: none;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .btn:hover {
+        background-color: #d35400;
+        transform: translateY(-3px);
+        box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+      }
+
+      .btn:active {
+        transform: translateY(-1px);
+      }
+
+      .btn-outline {
+        background-color: transparent;
+        border: 2px solid #e67e22;
+        color: #e67e22;
+      }
+
+      .btn-outline:hover {
+        background-color: #e67e22;
+        color: white;
+      }
+
+      /* Featured Section */
+      .featured {
+        padding: 4rem 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .section-title {
+        text-align: center;
+        margin-bottom: 3rem;
+        font-size: 2rem;
+        color: #333;
+        position: relative;
+      }
+
+      .section-title::after {
+        content: "";
+        position: absolute;
+        bottom: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 80px;
+        height: 3px;
+        background-color: #e67e22;
+      }
+
+      .section-title span {
+        color: #e67e22;
+      }
+
+      .dishes {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .dish-card {
+        background-color: white;
+        border-radius: 15px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .dish-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+      }
+
+      .dish-img {
+        height: 200px;
+        overflow: hidden;
+      }
+
+      .dish-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+      }
+
+      .dish-card:hover .dish-img img {
+        transform: scale(1.1);
+      }
+
+      .dish-info {
+        padding: 1.5rem;
+      }
+
+      .dish-title {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .dish-desc {
+        color: #777;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+      }
+
+      .dish-price {
+        font-weight: 700;
+        color: #e67e22;
+        margin-bottom: 1rem;
+        font-size: 1.2rem;
+      }
+
+      .card-bottom {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .add-btn {
+        background-color: #f3f3f3;
+        color: #333;
+        padding: 0.5rem 1rem;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .add-btn:hover {
+        background-color: #e67e22;
+        color: white;
+        transform: translateY(-2px);
+      }
+
+      .rating {
+        display: flex;
+        align-items: center;
+      }
+
+      .star {
+        color: #ffd700;
+        margin-right: 0.3rem;
+      }
+
+      /* About Section */
+      .about {
+        background-color: #fff;
+        padding: 5rem 5%;
+      }
+
+      .about-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: flex;
+        align-items: center;
+        gap: 3rem;
+      }
+
+      .about-img {
+        flex: 1;
+      }
+
+      .about-img img {
+        width: 100%;
+        border-radius: 10px;
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        transition: transform 0.5s;
+      }
+
+      .about-img:hover img {
+        transform: scale(1.02);
+      }
+
+      .about-text {
+        flex: 1;
+      }
+
+      .about-title {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        color: #333;
+      }
+
+      .about-subtitle {
+        font-size: 1.2rem;
+        color: #e67e22;
+        margin-bottom: 1rem;
+      }
+
+      .about-desc {
+        color: #777;
+        line-height: 1.7;
+        margin-bottom: 2rem;
+      }
+
+      /* Testimonials */
+      .testimonials {
+        padding: 5rem 5%;
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .testimonial-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 2rem;
+      }
+
+      .testimonial-card {
+        background-color: white;
+        padding: 2rem;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+      }
+
+      .testimonial-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      }
+
+      .quote {
+        font-size: 3rem;
+        color: #e67e22;
+        opacity: 0.3;
+        line-height: 1;
+        margin-bottom: 1rem;
+      }
+
+      .testimonial-text {
+        color: #555;
+        margin-bottom: 1.5rem;
+        line-height: 1.6;
+      }
+
+      .customer {
+        display: flex;
+        align-items: center;
+      }
+
+      .customer-img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        margin-right: 1rem;
+        object-fit: cover;
+        border: 3px solid #e67e22;
+      }
+
+      .customer-info h4 {
+        margin-bottom: 0.2rem;
+      }
+
+      .customer-info p {
+        color: #777;
+        font-size: 0.9rem;
+      }
+
+      /* Contact Section */
+      .contact {
+        background-color: #fff;
+        padding: 5rem 5%;
+      }
+
+      .contact-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 3rem;
+      }
+
+      .contact-info {
+        line-height: 1.8;
+      }
+
+      .contact-info h3 {
+        margin-bottom: 1.5rem;
+        font-size: 1.5rem;
+        color: #333;
+      }
+
+      .contact-info p {
+        color: #777;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+      }
+
+      .contact-info i {
+        margin-right: 10px;
+        color: #e67e22;
+      }
+
+      .contact-form form {
+        display: grid;
+        gap: 1.5rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+      }
+
+      .form-group label {
+        margin-bottom: 0.5rem;
+        color: #555;
+      }
+
+      .form-control {
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        transition: all 0.3s;
+      }
+
+      .form-control:focus {
+        border-color: #e67e22;
+        box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.2);
+      }
+
+      .map {
+        border-radius: 10px;
+        overflow: hidden;
+        height: 300px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .map iframe {
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+
+      /* Footer */
+      footer {
+        background-color: #222;
+        color: white;
+        padding: 3rem 5%;
+      }
+
+      .footer-content {
+        max-width: 1400px;
+        margin: 0 auto;
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 2rem;
+      }
+
+      .footer-logo {
+        font-size: 1.8rem;
+        font-weight: 700;
+        color: #e67e22;
+        font-family: "Brush Script MT", cursive;
+        margin-bottom: 1rem;
+      }
+
+      .footer-desc {
+        color: #aaa;
+        line-height: 1.6;
+        margin-bottom: 1rem;
+      }
+
+      .social-icons {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .social-icon {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background-color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: all 0.3s;
+        color: #fff;
+        text-decoration: none;
+      }
+
+      .social-icon:hover {
+        background-color: #e67e22;
+        transform: translateY(-3px);
+      }
+
+      .footer-title {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 0.5rem;
+      }
+
+      .footer-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: #e67e22;
+      }
+
+      .footer-links {
+        list-style: none;
+      }
+
+      .footer-links li {
+        margin-bottom: 0.8rem;
+      }
+
+      .footer-links a {
+        color: #aaa;
+        text-decoration: none;
+        transition: color 0.3s;
+        display: flex;
+        align-items: center;
+      }
+
+      .footer-links a i {
+        margin-right: 8px;
+        font-size: 0.8rem;
+      }
+
+      .footer-links a:hover {
+        color: #e67e22;
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        margin-top: 2rem;
+        border-top: 1px solid #444;
+        color: #aaa;
+      }
+
+      /* Orders Modal */
+      .modal {
+        display: none;
+        position: fixed;
+        z-index: 1000;
+        left: 0;
+        top: 0;
+        width: 100%;
+        height: 100%;
+        overflow: auto;
+        background-color: rgba(0, 0, 0, 0.5);
+        animation: fadeIn 0.3s;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      .modal-content {
+        background-color: #fff;
+        margin: 10% auto;
+        padding: 2rem;
+        border-radius: 10px;
+        max-width: 700px;
+        box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        position: relative;
+        animation: slideIn 0.4s;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateY(-50px);
+          opacity: 0;
+        }
+        to {
+          transform: translateY(0);
+          opacity: 1;
+        }
+      }
+
+      .close-modal {
+        position: absolute;
+        right: 20px;
+        top: 15px;
+        color: #aaa;
+        font-size: 28px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: color 0.3s;
+      }
+
+      .close-modal:hover {
+        color: #e67e22;
+      }
+
+      .modal-title {
+        color: #333;
+        margin-bottom: 1.5rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .order-list {
+        margin-bottom: 2rem;
+      }
+
+      .order-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1rem 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .order-item-info {
+        display: flex;
+        align-items: center;
+      }
+
+      .order-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 8px;
+        margin-right: 1rem;
+        object-fit: cover;
+      }
+
+      .order-name {
+        font-weight: 600;
+      }
+
+      .order-price {
+        color: #777;
+      }
+
+      .order-quantity {
+        display: flex;
+        align-items: center;
+      }
+
+      .quantity-btn {
+        width: 30px;
+        height: 30px;
+        background-color: #f3f3f3;
+        border: none;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.3s;
+      }
+
+      .quantity-btn:hover {
+        background-color: #e67e22;
+        color: white;
+      }
+
+      .quantity-input {
+        width: 40px;
+        text-align: center;
+        border: none;
+        font-size: 1rem;
+        margin: 0 0.5rem;
+      }
+
+      .remove-item {
+        color: #e74c3c;
+        cursor: pointer;
+        font-size: 1.2rem;
+        transition: all 0.3s;
+      }
+
+      .remove-item:hover {
+        transform: scale(1.2);
+      }
+
+      .order-summary {
+        background-color: #f9f9f9;
+        padding: 1.5rem;
+        border-radius: 8px;
+      }
+
+      .summary-item {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 1rem;
+      }
+
+      .summary-total {
+        font-weight: 700;
+        font-size: 1.2rem;
+        border-top: 1px solid #ddd;
+        padding-top: 1rem;
+        margin-top: 1rem;
+      }
+
+      .checkout-btn {
+        display: block;
+        width: 100%;
+        padding: 1rem;
+        margin-top: 1.5rem;
+        text-align: center;
+      }
+
+      .empty-cart {
+        text-align: center;
+        padding: 2rem 0;
+      }
+
+      .empty-cart i {
+        font-size: 4rem;
+        color: #ddd;
+        margin-bottom: 1rem;
+      }
+
+      .empty-cart p {
+        color: #777;
+        margin-bottom: 1.5rem;
+      }
+
+      /* Special Effects */
+      .animate-bg {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.05;
+        background-image: url("https://www.transparenttextures.com/patterns/food.png");
+      }
+
+      .floating {
+        animation: floating 3s ease-in-out infinite;
+      }
+
+      .spice1,
+      .spice2,
+      .spice3 {
+        position: absolute;
+        opacity: 0.1;
+        z-index: 1;
+      }
+
+      .spice1 {
+        top: 20%;
+        left: 10%;
+        transform: rotate(15deg);
+      }
+
+      .spice2 {
+        bottom: 10%;
+        right: 20%;
+        transform: rotate(-20deg);
+      }
+
+      .spice3 {
+        top: 50%;
+        right: 10%;
+        transform: rotate(45deg);
+      }
+
+      @keyframes floating {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-15px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      /* Bounce effect for add to cart */
+      @keyframes bounce {
+        0%,
+        20%,
+        50%,
+        80%,
+        100% {
+          transform: translateY(0);
+        }
+        40% {
+          transform: translateY(-10px);
+        }
+        60% {
+          transform: translateY(-5px);
+        }
+      }
+
+      .bounce {
+        animation: bounce 0.8s;
+      }
+
+      /* Mobile menu */
+      .mobile-toggle {
+        display: none;
+        background: none;
+        border: none;
+        font-size: 1.5rem;
+        cursor: pointer;
+        color: #333;
+      }
+
+      @media (max-width: 992px) {
+        .hero {
+          flex-direction: column;
+          text-align: center;
+        }
+
+        .hero-content {
+          padding-right: 0;
+          margin-bottom: 2rem;
+        }
+
+        .about-content {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .mobile-toggle {
+          display: block;
+        }
+
+        .navbar {
+          flex-wrap: wrap;
+        }
+
+        .logo-container {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          width: 100%;
+        }
+
+        .nav-links {
+          display: none;
+          width: 100%;
+          flex-direction: column;
+          text-align: center;
+          margin-top: 1rem;
+        }
+
+        .nav-links.active {
+          display: flex;
+        }
+
+        .nav-links li {
+          margin: 0.5rem 0;
+        }
+
+        .hero-title {
+          font-size: 2rem;
+        }
+
+        .hero-subtitle {
+          font-size: 2.5rem;
+        }
+
+        .nav-right {
+          width: 100%;
+          justify-content: center;
+          margin-top: 1rem;
+        }
+
+        .search-bar {
+          flex: 1;
+          max-width: 300px;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .dish-card {
+          max-width: 320px;
+          margin: 0 auto;
+        }
+
+        .modal-content {
+          margin: 20% auto;
+          padding: 1.5rem;
+        }
+
+        .order-item {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .order-quantity {
+          margin-top: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header with Django User Auth Integration -->
+    <header>
+      <nav class="navbar">
+        <div class="logo-container">
+          <a href="#" class="logo">Khana <span>Khazana</span></a>
+          <button class="mobile-toggle" id="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        <ul class="nav-links" id="nav-links">
+          <li><a href="#">Home</a></li>
+          <li><a href="#">Menu</a></li>
+          <li><a href="#">About</a></li>
+          <li><a href="#">Testimonials</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+          <form action="#" method="GET" class="search-form">
+            <input
+              type="text"
+              class="search-bar"
+              name="query"
+              placeholder="Search food..."
+            />
+          </form>
+
+          {% if user.is_authenticated %}
+          <div class="nav-icon" id="orders-btn">
+            <a href=""><i class="fas fa-clipboard-list"></i></a>
+          </div>
+          <div class="nav-icon dropdown">
+            <i class="fas fa-user"></i>
+            <div class="dropdown-content">
+              <a href="">My Profile</a>
+              <a href="">Order History</a>
+              <a href="">Logout</a>
+            </div>
+          </div>
+          {% else %}
+          <div class="nav-icon">
+            <a href=""><i class="fas fa-sign-in-alt"></i></a>
+          </div>
+          {% endif %}
+
+          <div class="nav-icon cart-icon" id="cart-btn">
+            <i class="fas fa-shopping-cart"></i>
+            <span class="cart-count" id="cart-count"
+              >{{ cart_items|length|default:'0' }}</span
+            >
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+      <div class="spice1">🌶️</div>
+      <div class="spice2">🍃</div>
+      <div class="spice3">✨</div>
+      <div class="hero-content">
+        <h1 class="hero-title">Enjoy Delicious</h1>
+        <h2 class="hero-subtitle">Traditional Food</h2>
+        <p class="hero-text">
+          Good food warms the heart and mends the soul. Experience authentic
+          Indian cuisine crafted with love and tradition.
+        </p>
+        <a href="#" class="btn">Order Now <i class="fas fa-arrow-right"></i></a>
+      </div>
+      <div class="hero-img">
+        <img
+          src="{% static 'images/hero-food.png' %}"
+          alt="Delicious Indian Food"
+          class="floating"
+        />
+      </div>
+      <div class="animate-bg"></div>
+    </section>
+
+    <!-- Menu Section with Django Dynamic Content -->
+    <section id="menu" class="featured">
+      <h2 class="section-title">Our <span>Special</span> Dishes</h2>
+      <div class="category-filter">
+        <button class="filter-btn active" data-filter="all">All</button>
+        {% for category in categories %}
+        <button class="filter-btn" data-filter="{{ category.slug }}">
+          {{ category.name }}
+        </button>
+        {% endfor %}
+      </div>
+
+      <div class="dishes">
+        {% for dish in featured_dishes %}
+        <div
+          class="dish-card"
+          data-id="{{ dish.id }}"
+          data-category="{{ dish.category.slug }}"
+        >
+          <div class="dish-img">
+            {% if dish.image %}
+            <img src="{{ dish.image.url }}" alt="{{ dish.name }}" />
+            {% else %}
+            <img
+              src="{% static 'images/default-dish.png' %}"
+              alt="{{ dish.name }}"
+            />
+            {% endif %} {% if dish.is_vegetarian %}
+            <div class="veg-badge"><i class="fas fa-leaf"></i></div>
+            {% endif %}
+          </div>
+          <div class="dish-info">
+            <h3 class="dish-title">{{ dish.name }}</h3>
+            <p class="dish-desc">{{ dish.description }}</p>
+            <p class="dish-price">₹{{ dish.price }}</p>
+            <div class="card-bottom">
+              <div
+                class="add-btn"
+                data-id="{{ dish.id }}"
+                data-name="{{ dish.name }}"
+                data-price="{{ dish.price }}"
+                data-img="{% if dish.image %}{{ dish.image.url }}{% else %}{% static 'images/default-dish.png' %}{% endif %}"
+              >
+                <i class="fas fa-plus"></i> Add to Cart
+              </div>
+              <div class="rating">
+                <span class="star">★</span>
+                <span>{{ dish.rating }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="no-dishes">
+          <p>No dishes available at the moment. Please check back later.</p>
+        </div>
+        {% endfor %}
+      </div>
+
+      <div class="view-all-container">
+        <a href="#" class="btn btn-outline">View Full Menu</a>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="about">
+      <div class="about-content">
+        <div class="about-img">
+          <img
+            src="{% static 'images/restaurant.jpg' %}"
+            alt="Our Restaurant"
+          />
+        </div>
+        <div class="about-text">
+          <h2 class="about-title">Our <span>Story</span></h2>
+          <h3 class="about-subtitle">
+            Serving Authentic Indian Cuisine Since 2005
+          </h3>
+          <p class="about-desc">{{ about_content.description|safe }}</p>
+          <div class="about-features">
+            <div class="feature">
+              <i class="fas fa-utensils"></i>
+              <h4>Authentic Recipes</h4>
+              <p>Traditional family recipes passed down through generations</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-leaf"></i>
+              <h4>Fresh Ingredients</h4>
+              <p>We source only the freshest local ingredients</p>
+            </div>
+            <div class="feature">
+              <i class="fas fa-award"></i>
+              <h4>Award Winning</h4>
+              <p>Recipient of the City Food Award three years in a row</p>
+            </div>
+          </div>
+          <a href="#" class="btn">Learn More</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Testimonials Section with Django Integration -->
+    <section id="testimonials" class="testimonials">
+      <h2 class="section-title">What Our <span>Customers</span> Say</h2>
+      <div class="testimonial-cards">
+        {% for testimonial in testimonials %}
+        <div class="testimonial-card">
+          <div class="quote">"</div>
+          <p class="testimonial-text">{{ testimonial.content }}</p>
+          <div class="customer">
+            {% if testimonial.customer_image %}
+            <img
+              src="{{ testimonial.customer_image.url }}"
+              alt="{{ testimonial.customer_name }}"
+              class="customer-img"
+            />
+            {% else %}
+            <img
+              src="{% static 'images/default-avatar.png' %}"
+              alt="{{ testimonial.customer_name }}"
+              class="customer-img"
+            />
+            {% endif %}
+            <div class="customer-info">
+              <h4>{{ testimonial.customer_name }}</h4>
+              <p>{{ testimonial.customer_title }}</p>
+            </div>
+          </div>
+        </div>
+        {% empty %}
+        <div class="no-testimonials">
+          <p>No testimonials yet. Be the first to leave a review!</p>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% if user.is_authenticated %}
+      <div class="add-testimonial">
+        <a href="{% url 'add_testimonial' %}" class="btn">Add Your Feedback</a>
+      </div>
+      {% endif %}
+    </section>
+
+    <!-- Contact Section with Django Form -->
+    <section id="contact" class="contact">
+      <h2 class="section-title">Get In <span>Touch</span></h2>
+      <div class="contact-content">
+        <div class="contact-info">
+          <h3>Contact Information</h3>
+          <p>
+            <i class="fas fa-map-marker-alt"></i> {{ contact_info.address }}
+          </p>
+          <p><i class="fas fa-phone"></i> {{ contact_info.phone }}</p>
+          <p><i class="fas fa-envelope"></i> {{ contact_info.email }}</p>
+          <p><i class="fas fa-clock"></i> Opening Hours:</p>
+          <p class="opening-hours">
+            {{ contact_info.opening_hours|linebreaksbr }}
+          </p>
+
+          <div class="social-icons">
+            {% if contact_info.facebook_url %}
+            <a
+              href="{{ contact_info.facebook_url }}"
+              class="social-icon"
+              target="_blank"
+            >
+              <i class="fab fa-facebook-f"></i>
+            </a>
+            {% endif %} {% if contact_info.instagram_url %}
+            <a
+              href="{{ contact_info.instagram_url }}"
+              class="social-icon"
+              target="_blank"
+            >
+              <i class="fab fa-instagram"></i>
+            </a>
+            {% endif %} {% if contact_info.twitter_url %}
+            <a
+              href="{{ contact_info.twitter_url }}"
+              class="social-icon"
+              target="_blank"
+            >
+              <i class="fab fa-twitter"></i>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="contact-form">
+          <form method="post" action="#">
+            {% csrf_token %} {% if messages %}
+            <div class="messages">
+              {% for message in messages %}
+              <div class="message {{ message.tags }}">{{ message }}</div>
+              {% endfor %}
+            </div>
+            {% endif %}
+
+            <div class="form-group">
+              <label for="id_name">Name</label>
+              {{ form.name }} {% if form.name.errors %}
+              <div class="error">{{ form.name.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="id_email">Email</label>
+              {{ form.email }} {% if form.email.errors %}
+              <div class="error">{{ form.email.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="id_subject">Subject</label>
+              {{ form.subject }} {% if form.subject.errors %}
+              <div class="error">{{ form.subject.errors }}</div>
+              {% endif %}
+            </div>
+
+            <div class="form-group">
+              <label for="id_message">Message</label>
+              {{ form.message }} {% if form.message.errors %}
+              <div class="error">{{ form.message.errors }}</div>
+              {% endif %}
+            </div>
+
+            <button type="submit" class="btn">Send Message</button>
+          </form>
+        </div>
+
+        <div class="map">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3888.7741317965747!2d77.64403731482157!3d12.982429618385236!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bae1671ede9f755%3A0xc2cf3cdee29e0f!2sKhana%20Khazana!5e0!3m2!1sen!2sin!4v1618923045727!5m2!1sen!2sin"
+            allowfullscreen=""
+            loading="lazy"
+          >
+          </iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- Cart Modal with Django Integration -->
+    <div id="cart-modal" class="modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <h2 class="modal-title">Your Cart</h2>
+
+        <div id="cart-items-container">
+          {% if cart_items %}
+          <div class="order-list">
+            {% for item in cart_items %}
+            <div class="order-item" data-id="{{ item.dish_id }}">
+              <div class="order-item-info">
+                <img
+                  src="{{ item.image }}"
+                  alt="{{ item.name }}"
+                  class="order-img"
+                />
+                <div>
+                  <h4 class="order-name">{{ item.name }}</h4>
+                  <p class="order-price">₹{{ item.price }} each</p>
+                </div>
+              </div>
+              <div class="order-quantity">
+                <button class="quantity-btn decrease-qty">-</button>
+                <input
+                  type="number"
+                  class="quantity-input"
+                  value="{{ item.quantity }}"
+                  min="1"
+                  max="10"
+                />
+                <button class="quantity-btn increase-qty">+</button>
+                <div class="remove-item"><i class="fas fa-trash"></i></div>
+              </div>
+            </div>
+            {% endfor %}
+          </div>
+
+          <div class="order-summary">
+            <div class="summary-item">
+              <span>Subtotal</span>
+              <span>₹<span id="subtotal">{{ cart_subtotal }}</span></span>
+            </div>
+            <div class="summary-item">
+              <span>Delivery Fee</span>
+              <span>₹<span id="delivery-fee">50</span></span>
+            </div>
+            <div class="summary-item">
+              <span>Tax (5%)</span>
+              <span>₹<span id="tax">{{ cart_tax }}</span></span>
+            </div>
+            <div class="summary-item summary-total">
+              <span>Total</span>
+              <span>₹<span id="total">{{ cart_total }}</span></span>
+            </div>
+          </div>
+
+          <div class="checkout-actions">
+            <form method="post" action="{% url 'checkout' %}">
+              {% csrf_token %}
+              <input type="hidden" name="cart_data" id="cart-data" />
+              <button type="submit" class="btn checkout-btn">
+                Proceed to Checkout
+              </button>
+            </form>
+          </div>
+          {% else %}
+          <div class="empty-cart">
+            <i class="fas fa-shopping-basket"></i>
+            <p>Your cart is empty</p>
+            <a href="#" class="btn btn-outline">Browse Menu</a>
+          </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer with Dynamic Django Content -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-about">
+          <div class="footer-logo">Khana <span>Khazana</span></div>
+          <p class="footer-desc">
+            Experience the authentic taste of India with our traditional recipes
+            passed down through generations.
+          </p>
+          <div class="social-icons">
+            {% for social in social_links %}
+            <a href="{{ social.url }}" class="social-icon" target="_blank">
+              <i class="fab fa-{{ social.platform }}"></i>
+            </a>
+            {% endfor %}
+          </div>
+        </div>
+
+        <div class="footer-links-container">
+          <h3 class="footer-title">Quick Links</h3>
+          <ul class="footer-links">
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> Home</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> Menu</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> About Us</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> Testimonials</a>
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> Contact</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-links-container">
+          <h3 class="footer-title">Support</h3>
+          <ul class="footer-links">
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> FAQs</a>
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-chevron-right"></i> Privacy Policy</a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-chevron-right"></i> Terms & Conditions</a
+              >
+            </li>
+            <li>
+              <a href="#"
+                ><i class="fas fa-chevron-right"></i> Delivery Information</a
+              >
+            </li>
+            <li>
+              <a href="#"><i class="fas fa-chevron-right"></i> Careers</a>
+            </li>
+          </ul>
+        </div>
+
+        <div class="footer-newsletter">
+          <h3 class="footer-title">Newsletter</h3>
+          <p>Subscribe to get special offers and updates</p>
+          <form class="newsletter-form" method="post">
+            {% csrf_token %}
+            <input
+              type="email"
+              name="email"
+              placeholder="Your Email"
+              required
+            />
+            <button type="submit" class="btn">Subscribe</button>
+          </form>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; {% now "Y" %} Khana Khazana | All Rights Reserved</p>
+      </div>
+    </footer>
+
+    <!-- Additional Django JavaScript Integration -->
+    <script>
+      // Handle CSRF token for AJAX requests
+      function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === name + "=") {
+              cookieValue = decodeURIComponent(
+                cookie.substring(name.length + 1)
+              );
+              break;
+            }
+          }
+        }
+        return cookieValue;
+      }
+      const csrftoken = getCookie("csrftoken");
+
+      // Cart functionality
+      document.addEventListener("DOMContentLoaded", function () {
+        const cartModal = document.getElementById("cart-modal");
+        const cartBtn = document.getElementById("cart-btn");
+        const closeModal = document.querySelector(".close-modal");
+        const mobileToggle = document.getElementById("mobile-menu-toggle");
+        const navLinks = document.getElementById("nav-links");
+
+        // Mobile menu toggle
+        mobileToggle.addEventListener("click", function () {
+          navLinks.classList.toggle("active");
+        });
+
+        // Open cart modal
+        cartBtn.addEventListener("click", function () {
+          cartModal.style.display = "block";
+          document.body.style.overflow = "hidden";
+        });
+
+        // Close cart modal
+        closeModal.addEventListener("click", function () {
+          cartModal.style.display = "none";
+          document.body.style.overflow = "auto";
+        });
+
+        // Close modal on outside click
+        window.addEventListener("click", function (event) {
+          if (event.target === cartModal) {
+            cartModal.style.display = "none";
+            document.body.style.overflow = "auto";
+          }
+        });
+
+        // Add to cart functionality
+        const addButtons = document.querySelectorAll(".add-btn");
+        addButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            const dishId = this.getAttribute("data-id");
+            const dishName = this.getAttribute("data-name");
+            const dishPrice = this.getAttribute("data-price");
+            const dishImg = this.getAttribute("data-img");
+
+            // Add bounce animation
+            this.classList.add("bounce");
+            setTimeout(() => {
+              this.classList.remove("bounce");
+            }, 800);
+
+            // Send AJAX request to add item to cart
+            fetch("", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken,
+              },
+              body: JSON.stringify({
+                dish_id: dishId,
+                name: dishName,
+                price: dishPrice,
+                image: dishImg,
+                quantity: 1,
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status === "success") {
+                  // Update cart count
+                  document.getElementById("cart-count").textContent =
+                    data.cart_count;
+
+                  // Show success message
+                  const successMessage = document.createElement("div");
+                  successMessage.className = "toast success";
+                  successMessage.textContent = `${dishName} added to cart!`;
+                  document.body.appendChild(successMessage);
+
+                  setTimeout(() => {
+                    successMessage.classList.add("show");
+                  }, 100);
+
+                  setTimeout(() => {
+                    successMessage.classList.remove("show");
+                    setTimeout(() => {
+                      document.body.removeChild(successMessage);
+                    }, 300);
+                  }, 3000);
+                }
+              })
+              .catch((error) => console.error("Error:", error));
+          });
+        });
+
+        // Category filter for menu
+        const filterButtons = document.querySelectorAll(".filter-btn");
+        const dishCards = document.querySelectorAll(".dish-card");
+
+        filterButtons.forEach((button) => {
+          button.addEventListener("click", function () {
+            // Remove active class from all buttons
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+
+            // Add active class to clicked button
+            this.classList.add("active");
+
+            const filter = this.getAttribute("data-filter");
+
+            dishCards.forEach((card) => {
+              if (
+                filter === "all" ||
+                card.getAttribute("data-category") === filter
+              ) {
+                card.style.display = "block";
+              } else {
+                card.style.display = "none";
+              }
+            });
+          });
+        });
+
+        // Update cart quantity
+        document.querySelectorAll(".increase-qty").forEach((button) => {
+          button.addEventListener("click", function () {
+            const itemContainer = this.closest(".order-item");
+            const quantityInput =
+              itemContainer.querySelector(".quantity-input");
+            const dishId = itemContainer.getAttribute("data-id");
+
+            let quantity = parseInt(quantityInput.value);
+            if (quantity < 10) {
+              quantity++;
+              quantityInput.value = quantity;
+              updateCartItem(dishId, quantity);
+            }
+          });
+        });
+
+        document.querySelectorAll(".decrease-qty").forEach((button) => {
+          button.addEventListener("click", function () {
+            const itemContainer = this.closest(".order-item");
+            const quantityInput =
+              itemContainer.querySelector(".quantity-input");
+            const dishId = itemContainer.getAttribute("data-id");
+
+            let quantity = parseInt(quantityInput.value);
+            if (quantity > 1) {
+              quantity--;
+              quantityInput.value = quantity;
+              updateCartItem(dishId, quantity);
+            }
+          });
+        });
+
+        document.querySelectorAll(".quantity-input").forEach((input) => {
+          input.addEventListener("change", function () {
+            const itemContainer = this.closest(".order-item");
+            const dishId = itemContainer.getAttribute("data-id");
+            let quantity = parseInt(this.value);
+
+            if (isNaN(quantity) || quantity < 1) {
+              quantity = 1;
+            } else if (quantity > 10) {
+              quantity = 10;
+            }
+
+            this.value = quantity;
+            updateCartItem(dishId, quantity);
+          });
+        });
+
+        // Remove item from cart
+        document.querySelectorAll(".remove-item").forEach((button) => {
+          button.addEventListener("click", function () {
+            const itemContainer = this.closest(".order-item");
+            const dishId = itemContainer.getAttribute("data-id");
+
+            // Send AJAX request to remove item
+            fetch("", {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                "X-CSRFToken": csrftoken,
+              },
+              body: JSON.stringify({
+                dish_id: dishId,
+              }),
+            })
+              .then((response) => response.json())
+              .then((data) => {
+                if (data.status === "success") {
+                  // Update cart count
+                  document.getElementById("cart-count").textContent =
+                    data.cart_count;
+
+                  // Remove item from DOM with animation
+                  itemContainer.style.opacity = "0";
+                  setTimeout(() => {
+                    itemContainer.remove();
+
+                    // Update cart summary
+                    document.getElementById("subtotal").textContent =
+                      data.cart_subtotal;
+                    document.getElementById("tax").textContent = data.cart_tax;
+                    document.getElementById("total").textContent =
+                      data.cart_total;
+
+                    // Show empty cart message if no items left
+                    if (data.cart_count === 0) {
+                      const orderList = document.querySelector(".order-list");
+                      const orderSummary =
+                        document.querySelector(".order-summary");
+                      const checkoutActions =
+                        document.querySelector(".checkout-actions");
+
+                      orderList.remove();
+                      orderSummary.remove();
+                      checkoutActions.remove();
+
+                      const emptyCart = document.createElement("div");
+                      emptyCart.className = "empty-cart";
+                      emptyCart.innerHTML = `
+                  <i class="fas fa-shopping-basket"></i>
+                  <p>Your cart is empty</p>
+                  <a href="#" class="btn btn-outline">Browse Menu</a>
+                `;
+
+                      document
+                        .getElementById("cart-items-container")
+                        .appendChild(emptyCart);
+                    }
+                  }, 300);
+                }
+              })
+              .catch((error) => console.error("Error:", error));
+          });
+        });
+
+        // Function to update cart item quantity
+        function updateCartItem(dishId, quantity) {
+          fetch("", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              "X-CSRFToken": csrftoken,
+            },
+            body: JSON.stringify({
+              dish_id: dishId,
+              quantity: quantity,
+            }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.status === "success") {
+                // Update cart summary
+                document.getElementById("subtotal").textContent =
+                  data.cart_subtotal;
+                document.getElementById("tax").textContent = data.cart_tax;
+                document.getElementById("total").textContent = data.cart_total;
+              }
+            })
+            .catch((error) => console.error("Error:", error));
+        }
+
+        // Update hidden cart data field before checkout
+        const checkoutForm = document.querySelector('form[action=""]');
+        if (checkoutForm) {
+          checkoutForm.addEventListener("submit", function (e) {
+            const cartData = {};
+            document.querySelectorAll(".order-item").forEach((item) => {
+              const dishId = item.getAttribute("data-id");
+              const quantity = item.querySelector(".quantity-input").value;
+              cartData[dishId] = quantity;
+            });
+
+            document.getElementById("cart-data").value =
+              JSON.stringify(cartData);
+          });
+        }
+      });
+    </script>
+  </body>
+</html>

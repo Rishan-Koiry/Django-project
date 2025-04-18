@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="About RK's Django website" />
+    <title>About Us | RK's Django Website</title>
+    <style>
+      :root {
+        --primary-color: #4caf50;
+        --text-color: #333;
+        --secondary-text-color: #555;
+        --background-color: #f8f8f8;
+        --shadow-color: rgba(0, 0, 0, 0.2);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Arial", sans-serif;
+        line-height: 1.6;
+        color: var(--text-color);
+        background-color: var(--background-color);
+        padding: 20px;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .container {
+        max-width: 800px;
+        width: 100%;
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      h1 {
+        color: var(--primary-color);
+        font-size: 3rem;
+        margin-bottom: 1rem;
+        text-shadow: 1px 1px 3px var(--shadow-color);
+        transition: color 0.3s ease;
+      }
+
+      h1:hover {
+        color: #3d8b40;
+      }
+
+      h3 {
+        font-size: 1.5rem;
+        color: var(--secondary-text-color);
+        margin-bottom: 2rem;
+        font-weight: normal;
+      }
+
+      .btn {
+        display: inline-block;
+        padding: 12px 24px;
+        font-size: 1rem;
+        color: white;
+        background-color: var(--primary-color);
+        text-decoration: none;
+        border-radius: 5px;
+        box-shadow: 0 2px 5px var(--shadow-color);
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+      }
+
+      .btn:hover {
+        background-color: #3d8b40;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 8px var(--shadow-color);
+      }
+
+      .btn:active {
+        transform: translateY(0);
+      }
+
+      .content {
+        background-color: white;
+        border-radius: 8px;
+        padding: 2rem;
+        box-shadow: 0 4px 10px var(--shadow-color);
+        margin-bottom: 2rem;
+      }
+
+      footer {
+        margin-top: 2rem;
+        font-size: 0.9rem;
+        color: var(--secondary-text-color);
+      }
+
+      @media (max-width: 768px) {
+        h1 {
+          font-size: 2.5rem;
+        }
+
+        h3 {
+          font-size: 1.2rem;
+        }
+
+        .content {
+          padding: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="content">
+        <h1>About Us</h1>
+        <h3>Welcome to the About Us page of RK's Django website!</h3>
+
+        <p>
+          We're dedicated to providing you with the best Django experience
+          possible. Our team works hard to ensure that our website is
+          user-friendly, responsive, and filled with helpful content.
+        </p>
+
+        <div style="margin-top: 30px">
+          <a href="{% url 'home' %}" class="btn">Home</a>
+        </div>
+      </div>
+
+      <footer>&copy; 2025 RK's Django Website. All rights reserved.</footer>
+    </div>
+
+    <script>
+      // Simple animation for the page elements
+      document.addEventListener("DOMContentLoaded", function () {
+        const content = document.querySelector(".content");
+        content.style.opacity = "0";
+        content.style.transform = "translateY(20px)";
+        content.style.transition = "opacity 0.5s ease, transform 0.5s ease";
+
+        setTimeout(() => {
+          content.style.opacity = "1";
+          content.style.transform = "translateY(0)";
+        }, 100);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <!-- Required meta tags -->
+    <meta charset="utf-8" />
+  </head>
+  <body>
+    <button id="button" class="ready">
+      <div class="message submitMessage">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 12.2">
+          <polyline stroke="currentColor" points="2,7.1 6.5,11.1 11,7.1 " />
+          <line stroke="currentColor" x1="6.5" y1="1.2" x2="6.5" y2="10.3" />
+        </svg>
+        <span class="button-text">SUBMIT</span>
+      </div>
+
+      <div class="message loadingMessage">
+        <div class="powder-loader">
+          <div class="particle p1"></div>
+          <div class="particle p2"></div>
+          <div class="particle p3"></div>
+          <div class="particle p4"></div>
+          <div class="particle p5"></div>
+        </div>
+      </div>
+
+      <div class="message successMessage">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 13 11">
+          <polyline stroke="currentColor" points="1.4,5.8 5.1,9.5 11.6,2.1 " />
+        </svg>
+      </div>
+    </button>
+
+    <canvas id="canvas"></canvas>
+    <script src="script.js"></script>
+  </body>
+</html>
